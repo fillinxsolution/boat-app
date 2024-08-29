@@ -19,5 +19,15 @@ class RolesSeeder extends Seeder
         ]);
         $permissions = Permission::where('guard_name', 'api')->get();
         $role1->syncPermissions($permissions);
+
+        $role2 = Role::create(['name' => 'Captain',
+            'guard_name' => 'api'
+        ]);
+        $role2->syncPermissions($permissions);
+
+        $role3 = Role::create(['name' => 'Supplier',
+            'guard_name' => 'api'
+        ]);
+        $role3->syncPermissions($permissions);
     }
 }

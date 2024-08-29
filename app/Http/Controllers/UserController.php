@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers;
 
-//use App\Interfaces\RoleRepositoryInterface;
+use App\Interfaces\RoleRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
+use App\Traits\UploadTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends BaseController
 {
+    use UploadTrait;
+
     public function __construct(
         private UserRepositoryInterface $userRepository,
-//        private RoleRepositoryInterface $roleRepository,
+        private RoleRepositoryInterface $roleRepository,
     )
     {
-        $this->middleware('permission:users-list', ['only' => ['index', 'show']]);
-        $this->middleware('permission:users-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:users-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:users-delete', ['only' => ['destroy']]);
+//        $this->middleware('permission:users-list', ['only' => ['index', 'show']]);
+//        $this->middleware('permission:users-create', ['only' => ['create', 'store']]);
+//        $this->middleware('permission:users-edit', ['only' => ['edit', 'update']]);
+//        $this->middleware('permission:users-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -29,10 +31,15 @@ class UserController extends BaseController
     {
         try {
             $users = $this->userRepository->list();
+            $roles = $this->roleRepository->list();
+            $result = [
+                'roles' => $roles,
+                'users' => $users,
+            ];
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse([$users,'Data Get SucessFully'],200);
+        return $this->sendResponse([$result,'Data Get SuccessFully'],200);
 
     }
 
@@ -41,23 +48,24 @@ class UserController extends BaseController
      */
     public function store(Request $request)
     {
+
         try {
             $request->validate([
-                'first_name' => 'required',
+                'name' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|same:confirm_password',
                 'confirm_password' => 'required|same:password',
                 'roles' => 'required'
             ]);
 
-            $data = $request->only(['first_name', 'first_name', 'password', 'email']);
-            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'users') : 'https://tapday.s3.ap-south-1.amazonaws.com/v2/users/VC2ycVtfHccmAcZzU9dEExh7Lu0VOa8y2mH1Jn4t.svg';
+            $data = $request->only(['name', 'password', 'email']);
+//            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'users') : 'https://tapday.s3.ap-south-1.amazonaws.com/v2/users/VC2ycVtfHccmAcZzU9dEExh7Lu0VOa8y2mH1Jn4t.svg';
             $roles = array_map('intval', $request->roles);
             $this->userRepository->storeOrUpdate($data, $roles);
         } catch (\Throwable $th) {
-            return $this->redirectError($th->getMessage());
+            return $this->sendException($th->getMessage());
         }
-        return $this->redirectSuccess(route('staff.index'), 'Staff created successfully.');
+        return $this->sendResponse([null,'User Created SuccessFully'],200);
     }
 
     /**
@@ -67,23 +75,21 @@ class UserController extends BaseController
     {
         try {
             $request->validate([
-                'first_name' => 'required',
+                'name' => 'required',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'password' => 'same:confirm_password',
                 'roles' => 'required'
             ]);
 
-            $data = $request->only(['first_name', 'first_name', 'password', 'email']);
-            if ($request->hasFile('image')) {
-                $this->deleteFile($request->old_img ?? null);
-                $data['image'] = $this->uploadFile($request->file('image'), 'users');
-            }
+            $data = $request->only(['name', 'email']);
+//            if ($request->hasFile('image')) {
+//                $data['image'] = $this->uploadFile($request->file('image'), 'users');
+//            }
             $roles = array_map('intval', $request->roles);
             $this->userRepository->storeOrUpdate($data, $roles, $id);
         } catch (\Throwable $th) {
-            return $this->redirectError($th->getMessage());
+            return $this->sendException($th->getMessage());
         }
-        return $this->redirectSuccess(route('staff.index'), 'Staff updated successfully.');
+        return $this->sendResponse([null,'User Updated SuccessFully'],200);
     }
 
     /**
@@ -98,8 +104,8 @@ class UserController extends BaseController
             }
             $user->delete();
         } catch (\Throwable $th) {
-            return $this->redirectError($th->getMessage());
+            return $this->sendException($th->getMessage());
         }
-        return $this->redirectSuccess(route('users.index'), 'Staff deleted successfully');
+        return $this->sendResponse([null,'User Deleted SuccessFully'],200);
     }
 }
