@@ -71,4 +71,8 @@ class AuthController extends BaseController
         auth()->user()->tokens()->delete();
         return $this->sendResponse(null, 'Logged Out.');
     }
+
+    public function loginGoogle(Request $request){
+        dd($request->all());
+    }
 }
