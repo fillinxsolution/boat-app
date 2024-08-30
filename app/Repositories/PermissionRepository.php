@@ -18,7 +18,23 @@ class PermissionRepository implements PermissionRepositoryInterface
     {
         return Permission::latest()->get();
     }
+    /**
+     * Permission for web guard.
+     */
+    public function webList(): Collection
+    {
+        return Permission::where('guard_name', 'web')->latest()->get();
+    }
 
+    /**
+     * Permission for api guard.
+     */
+    public function apiList($pageId = null): SupportCollection
+    {
+        $data = DB::table('permissions')->where('guard_name', 'api')
+            ->latest();
+        return $data->get();
+    }
     /**
      * Store permission.
      */

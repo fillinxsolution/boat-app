@@ -10,7 +10,7 @@ trait UploadTrait
     {
 
         $filename = date('YmdHi') . $file->getClientOriginalName();
-        $file->move(public_path($path), $filename);
+        $file->move(public_path('images/'.$path), $filename);
         return $filename;
     }
 

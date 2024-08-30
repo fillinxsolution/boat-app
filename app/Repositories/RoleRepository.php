@@ -17,6 +17,22 @@ class RoleRepository implements RoleRepositoryInterface
     }
 
     /**
+     * Web Roles List.
+     */
+    public function webList(): Collection
+    {
+        return Role::where('guard_name', 'web')->whereNot('name', 'Super Admin')->get();
+    }
+
+    /**
+     * API Roles List.
+     */
+    public function apiList(): Collection
+    {
+        return Role::with('pages')->where('guard_name', 'api')->get();
+    }
+
+    /**
      * Store or Update role.
      */
     public function storeOrUpdate($name, $permissions, $id = null, $guard = 'web')
@@ -29,24 +45,6 @@ class RoleRepository implements RoleRepositoryInterface
         return $role;
     }
 
-    /**
-     * Store or Update role for shop.
-     */
-    public function storeOrUpdateShop($name, $pages, $id = null)
-    {
-        $role = Role::updateOrCreate(
-            ['id' => $id],
-            ['name' => $name, 'guard_name' => 'api']
-        );
-        $rolePages = $role->pages()->sync($pages);
-        if (count($rolePages['detached']) > 0) {
-            $configIds = $role->configurations()->whereIn('page_id', $rolePages['detached'])->get()->pluck('id');
-            $role->configurations()->detach($configIds);
-            $permissionIds = $role->permissions()->whereIn('page_id', $rolePages['detached'])->get()->pluck('id');
-            $role->permissions()->detach($permissionIds);
-        }
-        return $role;
-    }
 
     /**
      * FInd role by id.

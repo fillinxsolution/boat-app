@@ -1,0 +1,157 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\BaseController;
+use App\Interfaces\RoleRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
+use App\Traits\UploadTrait;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Yajra\DataTables\Facades\DataTables;
+
+class StaffController extends BaseController
+{
+    use UploadTrait;
+
+    public function __construct(
+        private UserRepositoryInterface $userRepository,
+        private RoleRepositoryInterface $roleRepository,
+    ) {
+//        $this->middleware('permission:users-list', ['only' => ['index', 'show']]);
+//        $this->middleware('permission:users-create', ['only' => ['create','store']]);
+//        $this->middleware('permission:users-edit', ['only' => ['edit', 'update']]);
+//        $this->middleware('permission:users-delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request): View | JsonResponse
+    {
+        if ($request->ajax()) {
+            return DataTables::of($this->userRepository->list())
+                ->addIndexColumn()
+                ->addColumn('name', function ($row) {
+                    return $row->first_name . " " . $row->last_name;
+                })
+                ->editColumn('image', function ($row) {
+                    $image =   "<img src='{$row->image}'  height='50'>";
+                    return $image;
+                })->addColumn('roles', function ($row) {
+                    $badges = '';
+                    if (count($row->roles) > 0) {
+                        foreach ($row->roles as $role) {
+                            $badges .= '<span class="badge bg-primary rounded-pill me-1">' . $role->name . '</span>';
+                        }
+                    } else {
+                        $badges = 'N/A';
+                    }
+                    return $badges;
+                })
+                ->addColumn('action', function ($row) {
+                    return view('pages.staff.actions', compact('row'));
+                })
+                ->rawColumns(['action', 'image', 'roles'])
+                ->make(true);
+        }
+        return view('pages.staff.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View | RedirectResponse
+    {
+        try {
+            $roles = $this->roleRepository->list();
+        } catch (\Throwable $th) {
+            return $this->redirectError($th->getMessage());
+        }
+        return view('pages.staff.create', compact('roles'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        try {
+            $request->validate([
+                'first_name'              => 'required',
+                'email'             => 'required|email|unique:users,email',
+                'password'          => 'required|same:confirm_password',
+                'confirm_password'  => 'required|same:password',
+                'roles'             => 'required'
+            ]);
+
+            $data = $request->only(['first_name', 'password', 'email']);
+            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'users') : 'https://tapday.s3.ap-south-1.amazonaws.com/v2/users/VC2ycVtfHccmAcZzU9dEExh7Lu0VOa8y2mH1Jn4t.svg';
+            $roles =  array_map('intval', $request->roles);
+            $this->userRepository->storeOrUpdate($data, $roles);
+        } catch (\Throwable $th) {
+            return $this->redirectError($th->getMessage());
+        }
+        return $this->redirectSuccess(route('staff.index'), 'Staff created successfully.');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        try {
+            $staff = $this->userRepository->findById($id);
+            $roles = $this->roleRepository->list();
+            $staffRole = $staff->roles->pluck('id')->all();
+        } catch (\Throwable $th) {
+            return $this->redirectError($th->getMessage());
+        }
+        return view('pages.staff.edit', compact('staff', 'roles', 'staffRole'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        try {
+            $request->validate([
+                'first_name'  => 'required',
+                'email'     => 'required|email|unique:users,email,' . $id,
+                'password'          => 'same:confirm_password',
+                'roles'             => 'required'
+            ]);
+
+            $data = $request->only(['first_name', 'first_name', 'password', 'email']);
+            if ($request->hasFile('image')) {
+                $this->deleteFile($request->old_img ?? null);
+                $data['image']  = $this->uploadFile($request->file('image'), 'users');
+            }
+            $roles =  array_map('intval', $request->roles);
+            $this->userRepository->storeOrUpdate($data, $roles, $id);
+        } catch (\Throwable $th) {
+            return $this->redirectError($th->getMessage());
+        }
+        return $this->redirectSuccess(route('staff.index'), 'Staff updated successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        try {
+            $user = $this->userRepository->findById($id);
+            if ($user->id == 1 || auth()->user()->id ==  $user->id) {
+                return redirect()->back()->with('warning', 'You cannot delete this staff.');
+            }
+            $user->delete();
+        } catch (\Throwable $th) {
+            return $this->redirectError($th->getMessage());
+        }
+        return  $this->redirectSuccess(route('users.index'), 'Staff deleted successfully');
+    }
+}

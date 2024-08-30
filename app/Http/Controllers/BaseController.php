@@ -53,4 +53,14 @@ class BaseController extends Controller
         ];
         return response()->json($response, 500);
     }
+
+    public function redirectSuccess($route, $message)
+    {
+        return redirect($route)->with('success', $message);
+    }
+
+    public function redirectError($message)
+    {
+        return redirect()->back()->withErrors(['msg' => $message]);
+    }
 }
