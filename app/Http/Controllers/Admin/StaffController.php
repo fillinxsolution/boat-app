@@ -35,7 +35,7 @@ class StaffController extends BaseController
             return DataTables::of($this->userRepository->list())
                 ->addIndexColumn()
                 ->addColumn('name', function ($row) {
-                    return $row->first_name . " " . $row->last_name;
+                    return $row->name;
                 })
                 ->editColumn('image', function ($row) {
                     $image =   "<img src='{$row->image}'  height='50'>";
