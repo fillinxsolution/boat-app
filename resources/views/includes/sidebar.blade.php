@@ -59,6 +59,15 @@
 
                     </x-nav-item>
 
+{{--                @canany(['serviceCategory-list'])--}}
+                    <x-nav-item active="catalog.*" icon="notebook" title="Catalog" :submenu="true">
+                        @can('serviceCategory-list')
+                            <x-nav-item route="catalog.category.index" active="catalog.category.*"
+                                        title="Category" />
+                        @endcan
+                    </x-nav-item>
+{{--                @endcanany--}}
+
             </ul>
 
         </div>

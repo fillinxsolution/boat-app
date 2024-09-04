@@ -10,7 +10,7 @@ class Category extends Model
     use HasFactory;
 
 
-    protected $fillable  = ['name','image','short_description','parent_id','is_popular'];
+    protected $fillable  = ['name','image','short_description','parent_id','is_popular','status'];
 
 
     protected $hidden = [
@@ -21,7 +21,7 @@ class Category extends Model
 
     public function getImageAttribute($value)
     {
-        return $value ? public_path('categories/'.$value) : null;
+        return $value ? public_path('images/categories/'.$value) : null;
     }
 
 

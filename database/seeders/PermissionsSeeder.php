@@ -154,6 +154,43 @@ class PermissionsSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+
+            /* ---------------------------------- Service Category --------------------------------- */
+            [
+                'name' => 'serviceCategory-list',
+                'display_name' => 'serviceCategory List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'serviceCategory-create',
+                'display_name' => 'serviceCategory Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'serviceCategory-edit',
+                'display_name' => 'serviceCategory Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'serviceCategory-delete',
+                'display_name' => 'serviceCategory Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+
+
+
+
+
+
         ]);
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('short_description');
             $table->enum('is_popular',['Yes','No'])->default('No');
+            $table->boolean('status')->default(1);
             $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });

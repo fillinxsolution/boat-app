@@ -29,7 +29,7 @@ class RoleRepository implements RoleRepositoryInterface
      */
     public function apiList(): Collection
     {
-        return Role::with('pages')->where('guard_name', 'api')->get();
+        return Role::where('guard_name', 'api')->get();
     }
 
     /**
@@ -51,6 +51,6 @@ class RoleRepository implements RoleRepositoryInterface
      */
     public function findById($id)
     {
-        return Role::with('pages.configs.configRoles')->find($id);
+        return Role::find($id);
     }
 }

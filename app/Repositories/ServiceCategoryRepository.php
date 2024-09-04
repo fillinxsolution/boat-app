@@ -2,44 +2,45 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\CategoryRepositoryInterface;
+use App\Interfaces\ServiceCategoryRepositoryInterface;
 use App\Models\Category;
+use App\Models\IntegrationCategory;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as SupportCollection;
 
-class CategoryRepository implements CategoryRepositoryInterface
+
+class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
 {
+
     /**
-     * Category for web guard.
+     * All integration category list.
      */
     public function list(): Collection
     {
         return Category::latest()->get();
     }
 
-    /**
-     * Category for web guard.
+     /**
+     * Active integration category list.
      */
-    public function subList(): Collection
+    public function activeList(): Collection
     {
-        return Category::latest()->where('parent_id','!=' , null)->get();
+        return Category::where('status', 1)->get();
     }
 
     /**
-     * Category permission.
+     * Create & save Integration Category.
      */
     public function storeOrUpdate(array $data, $id = null): Category
     {
-        $category = Category::updateOrCreate(
+        $cat = Category::updateOrCreate(
             ['id' => $id],
             $data
         );
-
-        return  $category;
+        return $cat;
     }
 
     /**
-     * Find Category by id.
+     * Find integration category by id.
      */
     public function findById($id): Category
     {
@@ -47,7 +48,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * Delete Category by id.
+     * Delete integration category by id.
      */
     public function destroyById($id): bool
     {

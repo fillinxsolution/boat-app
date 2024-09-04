@@ -11,7 +11,7 @@ class Role extends SpetieRole
 {
     use HasFactory;
 
-    public $guard_name = ['api'];
+    public $guard_name = ['web','api'];
 
     protected $fillable = [
         'guard_name', 'name'

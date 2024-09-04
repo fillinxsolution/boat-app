@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Traits\ActionsTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -12,7 +11,6 @@ use Illuminate\View\View;
 
 class PasswordResetLinkController extends Controller
 {
-    use ActionsTrait;
     /**
      * Display the password reset link request view.
      */
@@ -43,7 +41,7 @@ class PasswordResetLinkController extends Controller
 
             $arr = array('{$link}' => $link);
 
-            $this->sendmail($request->email, 'ForgotPasswordEmailTemplate', $arr, 'ForgotPasswordEmailTemplate');
+//            $this->sendmail($request->email, 'ForgotPasswordEmailTemplate', $arr, 'ForgotPasswordEmailTemplate');
             // $data = strtr($template, $arr);
             // Mail::to($request->email)->send(new DynamicEmail($data));
             return back()->with('success', 'Password Reset Link Sent Successfully.');

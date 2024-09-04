@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\ServiceCategoryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -40,6 +41,18 @@ Route::prefix('roles')->as('roles.')->group(function () {
     Route::resource('staff', RoleController::class);
 });
 
+/**
+ * Roles Routes.
+ */
+Route::prefix('catalog')->as('catalog.')->group(function () {
+    /* ------------------------- Staff Roles Routes ------------------------ */
+    /* ------------------------- Integration Category Routes ------------------------ */
+    Route::patch('category/change/{id}', 'ServiceCategoryController@change')->name('category.change');
+    Route::get('category/list', 'ServiceCategoryController@list')->name('category.list');
+    Route::resource('category', ServiceCategoryController::class);
+
+});
+
 
 /**
  * Settings Routes.
@@ -49,6 +62,6 @@ Route::prefix('settings')->as('settings.')->group(function () {
 
     Route::controller(SettingController::class)->group(function () {
         Route::post('store',    'store')->name('store');
-        Route::get('admin',     'admin')->name('admin');
+        Route::get('admin'      ,     'admin')->name('admin');
     });
 });
