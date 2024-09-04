@@ -1,7 +1,7 @@
 <div class="navbar navbar-sm navbar-footer border-top">
     <div class="container-fluid">
         <span>
-{{--           {{  adminSettings('admin_footer_text') }}--}}
+           {{  adminSettings('admin_footer_text') }}
         </span>
 
         {{-- <ul class="nav">

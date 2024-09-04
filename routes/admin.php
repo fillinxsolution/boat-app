@@ -42,7 +42,7 @@ Route::prefix('roles')->as('roles.')->group(function () {
 });
 
 /**
- * Roles Routes.
+ * Catalog Routes.
  */
 Route::prefix('catalog')->as('catalog.')->group(function () {
     /* ------------------------- Staff Roles Routes ------------------------ */
@@ -50,6 +50,18 @@ Route::prefix('catalog')->as('catalog.')->group(function () {
     Route::patch('category/change/{id}', 'ServiceCategoryController@change')->name('category.change');
     Route::get('category/list', 'ServiceCategoryController@list')->name('category.list');
     Route::resource('category', ServiceCategoryController::class);
+
+});
+
+/**
+ * Pages Routes.
+ */
+Route::prefix('pages')->as('pages.')->group(function () {
+    /* ------------------------- Staff Roles Routes ------------------------ */
+    /* ------------------------- Integration Category Routes ------------------------ */
+//    Route::patch('category/change/{id}', 'ServiceCategoryController@change')->name('category.change');
+//    Route::get('category/list', 'ServiceCategoryController@list')->name('category.list');
+    Route::resource('aboutUs', ServiceCategoryController::class);
 
 });
 

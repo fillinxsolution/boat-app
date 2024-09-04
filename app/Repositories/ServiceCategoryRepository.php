@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Interfaces\ServiceCategoryRepositoryInterface;
 use App\Models\Category;
-use App\Models\IntegrationCategory;
 use Illuminate\Database\Eloquent\Collection;
 
 

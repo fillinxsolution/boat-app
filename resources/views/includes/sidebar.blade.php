@@ -10,12 +10,12 @@
 
                 <div>
                     <button type="button"
-                        class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                            class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
                         <i class="ph-arrows-left-right"></i>
                     </button>
 
                     <button type="button"
-                        class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
+                            class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
                         <i class="ph-x"></i>
                     </button>
                 </div>
@@ -33,40 +33,45 @@
                     </div>
                     <i class="ph-dots-three sidebar-resize-show"></i>
                 </li>
-{{--                @can('dashboard-view')--}}
-                    <x-nav-item route="dashboard" icon="house" title="Dashboards" />
-{{--                @endcan--}}
+                @can('dashboard-view')
+                <x-nav-item route="dashboard" icon="house" title="Dashboards"/>
+                @endcan
 
-{{--                @can('users-list')--}}
-                    <x-nav-item route="staff.index" active="staff.*" icon="users-three" title="Staff" />
-{{--                @endcan--}}
+                @can('users-list')
+                <x-nav-item route="staff.index" active="staff.*" icon="users-three" title="Staff"/>
+               @endcan
+
+                {{--                @canany(['adminRoles-list', 'shopRoles-list'])--}}
+                <x-nav-item active="roles.*" icon="user-focus" title="Roles" :submenu="true">
+                    <x-nav-item route="roles.staff.index" active="roles.staff.*" title="Staff"/>
+
+                </x-nav-item>
+                {{--                @endcanany--}}
+                <x-nav-item active="permissions.*" icon="lock" title="Permissions" :submenu="true">
+
+                    <x-nav-item route="permissions.staff.index" active="permissions.staff.*" title="Staff"/>
+
+                </x-nav-item>
 
 
-{{--                @canany(['adminRoles-list', 'shopRoles-list'])--}}
-                    <x-nav-item active="roles.*" icon="user-focus" title="Roles" :submenu="true">
-                            <x-nav-item route="roles.staff.index" active="roles.staff.*" title="Staff" />
+                @canany(['serviceCategory-list'])
+                <x-nav-item active="catalog.*" icon="notebook" title="Catalog" :submenu="true">
+                    @can('serviceCategory-list')
+                        <x-nav-item route="catalog.category.index" active="catalog.category.*"
+                                    title="Category"/>
+                    @endcan
+                </x-nav-item>
+                @endcanany
 
-                    </x-nav-item>
-{{--                @endcanany--}}
-                    <x-nav-item active="permissions.*" icon="lock" title="Permissions" :submenu="true">
+                <x-nav-item active="pages.*" icon="notebook" title="Pages" :submenu="true">
+                    <x-nav-item route="pages.aboutUs.index" active="pages.aboutUs.*"
+                                title="About Us"/>
+                </x-nav-item>
 
-                            <x-nav-item route="permissions.staff.index" active="permissions.staff.*" title="Staff" />
+                <x-nav-item active="settings.*" icon="gear-six" title="Settings" :submenu="true">
+                    <x-nav-item route="settings.admin" title="Admin"/>
+                </x-nav-item>
 
-                    </x-nav-item>
-
-                    <x-nav-item active="settings.*" icon="gear-six" title="Settings" :submenu="true">
-                            <x-nav-item route="settings.admin" title="Admin" />
-
-                    </x-nav-item>
-
-{{--                @canany(['serviceCategory-list'])--}}
-                    <x-nav-item active="catalog.*" icon="notebook" title="Catalog" :submenu="true">
-                        @can('serviceCategory-list')
-                            <x-nav-item route="catalog.category.index" active="catalog.category.*"
-                                        title="Category" />
-                        @endcan
-                    </x-nav-item>
-{{--                @endcanany--}}
 
             </ul>
 

@@ -14,10 +14,10 @@
                             <strong>Name:</strong>
                             {{ $role->name }}
                         </div>
-                        <div class="form-group mb-3">
-                            <strong>Guard Name:</strong>
-                            {{ $role->guard_name }}
-                        </div>
+{{--                        <div class="form-group mb-3">--}}
+{{--                            <strong>Guard Name:</strong>--}}
+{{--                            {{ $role->guard_name }}--}}
+{{--                        </div>--}}
                         <div class="form-group">
                             <h5 class="m-0">Permissions:</h5>
                             <div class="row">
