@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\File;
 class SettingController extends Controller
 {
     use UploadTrait;
-    /**
-     * Display a listing of the resource.
-     */
-    public function shop(): View
-    {
-        return view('pages.settings.shop.index');
+
+    public function __construct() {
+        $this->middleware('permission:adminSettings-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:adminSettings-create', ['only' => ['store']]);
+        $this->middleware('permission:adminSettings-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:adminSettings-delete', ['only' => ['destroy']]);
     }
 
     /**

@@ -54,7 +54,6 @@ class PermissionsSeeder extends Seeder
             ],
 
 
-
             /* ---------------------------- Admin Permissions --------------------------- */
             [
                 'name' => 'permissions-list',
@@ -185,10 +184,66 @@ class PermissionsSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
 
+            /* ---------------------------------- Supplier Permission --------------------------------- */
+            [
+                'name' => 'suppliers-list',
+                'display_name' => 'suppliers List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'suppliers-create',
+                'display_name' => 'suppliers Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'suppliers-edit',
+                'display_name' => 'suppliers Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'suppliers-delete',
+                'display_name' => 'suppliers Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
 
 
-
-
+            /* ---------------------------------- Captains Permission --------------------------------- */
+            [
+                'name' => 'captains-list',
+                'display_name' => 'captains List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'captains-create',
+                'display_name' => 'captains Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'captains-edit',
+                'display_name' => 'captains Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'captains-delete',
+                'display_name' => 'captains Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
 
 
         ]);

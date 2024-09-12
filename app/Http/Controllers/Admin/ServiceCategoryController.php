@@ -142,7 +142,6 @@ class ServiceCategoryController extends BaseController
             if ($request->field == 'status') {
                 $data['status'] = $request->boolean('status'); // Use boolean to handle checkbox
             }
-            dd($data);
             $this->serviceCategoryRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['msg' => $th->getMessage()]);
