@@ -20,7 +20,7 @@ class SupplierRepository implements SupplierRepositoryInterface
     }
 
     /**
-     * Create & save Integration Category.
+     * Create & save supplier.
      */
     public function storeOrUpdate(array $data, $id = null): Supplier
     {
@@ -32,14 +32,14 @@ class SupplierRepository implements SupplierRepositoryInterface
     }
 
     /**
-     * Find integration category by id.
+     * Find Supplier by id.
      */
     public function findById($id): Supplier
     {
         return Supplier::find($id);
     }
     /**
-     * Delete integration category by id.
+     * Delete Supplier by id.
      */
     public function destroyById($id): bool
     {

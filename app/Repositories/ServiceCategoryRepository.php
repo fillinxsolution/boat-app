@@ -47,7 +47,7 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
     }
 
     /**
-     * Find integration category by id.
+     * Find  category by id.
      */
     public function findById($id): Category
     {

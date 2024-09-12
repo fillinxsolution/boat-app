@@ -26,22 +26,17 @@ class SupplierController extends BaseController
 
         try {
             $id = auth()->user()->id;
-            $categories = $this->supplierRepository->list($id);
+            $supplier = $this->supplierRepository->list($id);
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse($categories, 'Data Get SuccessFully', 200);
+        return $this->sendResponse($supplier, 'Data Get SuccessFully', 200);
     }
 
 
     public function store(Request $request)
     {
         try {
-
-            if ($request->hasFile('company_registry')) {
-                $data['company_registry'] = $this->uploadFile($request->file('company_registry'), 'users/documents/companyRegistry');
-            }
-            dd($data);
             $request->validate([
                 'company_name' => 'required',
                 'director_name' => 'required',

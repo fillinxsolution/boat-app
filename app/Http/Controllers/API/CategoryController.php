@@ -24,7 +24,6 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-
         try {
             $categories = $this->serviceCategoryRepository->activeList();
         } catch (\Throwable $th) {
