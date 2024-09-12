@@ -16,10 +16,7 @@ class CategoryController extends BaseController
 
     )
     {
-//        $this->middleware('permission:users-list', ['only' => ['index', 'show']]);
-//        $this->middleware('permission:users-create', ['only' => ['create', 'store']]);
-//        $this->middleware('permission:users-edit', ['only' => ['edit', 'update']]);
-//        $this->middleware('permission:users-delete', ['only' => ['destroy']]);
+
     }
 
     /**
@@ -33,23 +30,35 @@ class CategoryController extends BaseController
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse([$categories, 'Data Get SuccessFully'], 200);
+        return $this->sendResponse($categories, 'Data Get SuccessFully', 200);
     }
 
 
     /**
      * Display a listing of the resource.
      */
-    public function subCategory()
+    public function isPopular()
     {
 
         try {
-            $subcategories = $this->serviceCategoryRepository->activeList();
+            $categories = $this->serviceCategoryRepository->isPopular();
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse([$subcategories, 'Data Get SuccessFully'], 200);
+        return $this->sendResponse($categories, 'Data Get SuccessFully', 200);
     }
 
+    /**
+     * Display a listing of the resource.
+     */
+    public function subCategory($id)
+    {
 
+        try {
+            $subcategories = $this->serviceCategoryRepository->subCategory($id);
+        } catch (\Throwable $th) {
+            return $this->sendException([$th->getMessage()]);
+        }
+        return $this->sendResponse($subcategories, 'Data Get SuccessFully', 200);
+    }
 }

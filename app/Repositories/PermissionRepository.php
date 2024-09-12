@@ -29,7 +29,7 @@ class PermissionRepository implements PermissionRepositoryInterface
     /**
      * Permission for api guard.
      */
-    public function apiList($pageId = null): SupportCollection
+    public function apiList(): SupportCollection
     {
         $data = DB::table('permissions')->where('guard_name', 'api')
             ->latest();

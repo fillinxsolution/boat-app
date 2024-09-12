@@ -8,9 +8,13 @@ interface ServiceCategoryRepositoryInterface
 
     public function activeList();
 
+    public function isPopular();
+
     public function storeOrUpdate(array $data, $id = null);
 
     public function findById($id);
 
     public function destroyById($id);
+
+    public function subCategory($id);
 }

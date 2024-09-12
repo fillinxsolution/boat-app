@@ -72,7 +72,45 @@ class AuthController extends BaseController
         return $this->sendResponse(null, 'Logged Out.');
     }
 
-    public function loginGoogle(Request $request){
-        dd($request->all());
+    public function socialLogin(Request $request)
+    {
+        try {
+
+            $provider = $request->provider;
+            $user = $request->data;
+            if ($provider == 'google')
+            {
+                $finduser = User::where('email', $user['email'])->first();
+                if($finduser){
+
+                    Auth::login($finduser);
+
+                    $data['access_token'] = $user['access_token'];
+                    $data['token_type'] = 'Bearer';
+                    $data['user'] = $finduser;
+                    return $this->sendResponse($data, 'Login Successfully');
+
+                }else{
+                    $newUser = User::create([
+                        'name' => $user['name'],
+                        'email' => $user['email'],
+                        'google_id'=> $user['access_token'],
+                        'password' => Hash::make('123456dummy'),
+//                        'role' => 'guest',
+                    ]);
+
+                    Auth::login($newUser);
+
+                    $data['access_token'] = $user['access_token'];
+                    $data['token_type'] = 'Bearer';
+                    $data['user'] = $newUser;
+
+                    return $this->sendResponse($data, 'Register Successfully');
+                }
+            }
+
+        } catch (\Exception $e) {
+            return $this->sendError(null, [$e->getMessage()], 500);
+        }
     }
 }

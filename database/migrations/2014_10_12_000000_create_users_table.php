@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('is_admin')->default(0);  // 1 for admin side
             $table->string('login_with_google')->nullable();
             $table->string('login_with_facebook')->nullable();
+            $table->enum('is_active',['Active','DeActive'])->default('Active');
             $table->rememberToken();
             $table->timestamps();
         });

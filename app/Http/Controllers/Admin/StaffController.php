@@ -20,10 +20,10 @@ class StaffController extends BaseController
         private UserRepositoryInterface $userRepository,
         private RoleRepositoryInterface $roleRepository,
     ) {
-//        $this->middleware('permission:users-list', ['only' => ['index', 'show']]);
-//        $this->middleware('permission:users-create', ['only' => ['create','store']]);
-//        $this->middleware('permission:users-edit', ['only' => ['edit', 'update']]);
-//        $this->middleware('permission:users-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:users-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:users-create', ['only' => ['create','store']]);
+        $this->middleware('permission:users-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:users-delete', ['only' => ['destroy']]);
     }
 
     /**

@@ -40,41 +40,16 @@ class UserController extends BaseController
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse([$result,'Data Get SuccessFully'],200);
+        return $this->sendResponse($result,'Data Get SuccessFully',200);
 
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-
-        try {
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|same:confirm_password',
-                'confirm_password' => 'required|same:password',
-                'roles' => 'required'
-            ]);
-
-            $data = $request->only(['name', 'password', 'email']);
-//            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'users') : 'https://tapday.s3.ap-south-1.amazonaws.com/v2/users/VC2ycVtfHccmAcZzU9dEExh7Lu0VOa8y2mH1Jn4t.svg';
-            $roles = array_map('intval', $request->roles);
-            $this->userRepository->storeOrUpdate($data, $roles);
-        } catch (\Throwable $th) {
-            return $this->sendException($th->getMessage());
-        }
-        return $this->sendResponse([null,'User Created SuccessFully'],200);
-    }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
         try {
+            $id = auth()->user()->id;
             $request->validate([
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email,' . $id,
@@ -85,13 +60,28 @@ class UserController extends BaseController
 //            if ($request->hasFile('image')) {
 //                $data['image'] = $this->uploadFile($request->file('image'), 'users');
 //            }
-            $roles = array_map('intval', $request->roles);
-            $this->userRepository->storeOrUpdate($data, $roles, $id);
+            $this->userRepository->updateApiUser($data, $id);
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
-        return $this->sendResponse([null,'User Updated SuccessFully'],200);
+        return $this->sendResponse(null,'User Updated SuccessFully',200);
     }
+
+
+
+    /**
+     * show the specified resource from storage.
+     */
+    public function show($id)
+    {
+        try {
+            $user = $this->userRepository->findById($id);
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+        return $this->sendResponse($user,'User Deleted SuccessFully',200);
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -107,6 +97,6 @@ class UserController extends BaseController
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
-        return $this->sendResponse([null,'User Deleted SuccessFully'],200);
+        return $this->sendResponse(null,'User Deleted SuccessFully',200);
     }
 }

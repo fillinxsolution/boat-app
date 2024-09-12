@@ -21,7 +21,7 @@ class Category extends Model
 
     public function getImageAttribute($value)
     {
-        return $value ? public_path('images/categories/'.$value) : null;
+        return $value ? '/images/categories/'.$value : null;
     }
 
 
