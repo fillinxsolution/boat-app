@@ -15,9 +15,19 @@ class RolesSeeder extends Seeder
     public function run(): void
     {
         $role1 = Role::create(['name' => 'Super Admin',
-            'guard_name' => 'api'
+            'guard_name' => 'web'
         ]);
-        $permissions = Permission::where('guard_name', 'api')->get();
+        $permissions = Permission::where('guard_name', 'web')->get();
         $role1->syncPermissions($permissions);
+
+        $role2 = Role::create(['name' => 'Captain',
+            'guard_name' => 'web'
+        ]);
+        $role2->syncPermissions($permissions);
+
+        $role3 = Role::create(['name' => 'Supplier',
+            'guard_name' => 'web'
+        ]);
+        $role3->syncPermissions($permissions);
     }
 }

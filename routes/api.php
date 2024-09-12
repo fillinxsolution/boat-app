@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\UserController;
 
 
 /*
@@ -21,8 +21,11 @@ use App\Http\Controllers\UserController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/login-google', [AuthController::class, 'loginGoogle']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
+    Route::apiResource('categories', CategoryController::class);
+    Route::get('sub-categories', [CategoryController::class,'subCategory']);
 });
 

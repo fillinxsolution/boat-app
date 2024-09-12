@@ -22,7 +22,8 @@ class UserSeeder extends Seeder
             'password'      => '123456789',
             'is_admin'      => 1,
         ]);
-        $role1 = Role::where('name','Super Admin')->where('guard_name','api')->first();
+        $role1 = Role::where('name','Super Admin')->where('guard_name','web')->first();
+
         $user1->assignRole($role1);
 
     }
