@@ -6,12 +6,14 @@ use Illuminate\Support\ServiceProvider;
 use App\Interfaces\{PermissionRepositoryInterface,
     RoleRepositoryInterface,
     ServiceCategoryRepositoryInterface,
+    ServiceRepositoryInterface,
     SupplierRepositoryInterface,
     UserRepositoryInterface};
 
 use App\Repositories\{PermissionRepository,
     RoleRepository,
     ServiceCategoryRepository,
+    ServiceRepository,
     SupplierRepository,
     UserRepository};
 
@@ -27,6 +29,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
         $this->app->bind(ServiceCategoryRepositoryInterface::class, ServiceCategoryRepository::class);
         $this->app->bind(SupplierRepositoryInterface::class, SupplierRepository::class);
+        $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
 
     }
 

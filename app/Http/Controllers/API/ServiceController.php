@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\BaseController;
-use App\Interfaces\SupplierRepositoryInterface;
+use App\Http\Controllers\Controller;
+use App\Interfaces\ServiceRepositoryInterface;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 
-class SupplierController extends BaseController
+class ServiceController extends Controller
 {
     use UploadTrait;
 
     public function __construct(
-        private SupplierRepositoryInterface $supplierRepository,
+        private ServiceRepositoryInterface $serviceRepository,
 
     )
     {
@@ -26,7 +26,7 @@ class SupplierController extends BaseController
 
         try {
             $id = auth()->user()->id;
-            $categories = $this->supplierRepository->list($id);
+            $categories = $this->serviceRepository->list($id);
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
@@ -37,6 +37,11 @@ class SupplierController extends BaseController
     public function store(Request $request)
     {
         try {
+
+            if ($request->hasFile('company_registry')) {
+                $data['company_registry'] = $this->uploadFile($request->file('company_registry'), 'users/documents/companyRegistry');
+            }
+            dd($data);
             $request->validate([
                 'company_name' => 'required',
                 'director_name' => 'required',
@@ -56,7 +61,7 @@ class SupplierController extends BaseController
                 $data['company_registry'] = $this->uploadDocuments($request->file('company_registry'), 'supplier/documents/companyRegistry');
             }
             $data['user_id'] =  auth()->user()->id;
-            $this->supplierRepository->storeOrUpdate($data);
+            $this->serviceRepository->storeOrUpdate($data);
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -87,12 +92,11 @@ class SupplierController extends BaseController
                 $data['company_registry'] = $this->uploadDocuments($request->file('company_registry'), 'supplier/documents/companyRegistry');
             }
             $data['user_id'] =  auth()->user()->id;
-            $this->supplierRepository->storeOrUpdate($data, $id);
+            $this->serviceRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
         return $this->sendResponse(null,'Supplier Documents Update SuccessFully',200);
     }
-
 
 }
