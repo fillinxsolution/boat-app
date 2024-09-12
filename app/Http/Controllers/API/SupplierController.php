@@ -82,7 +82,7 @@ class SupplierController extends BaseController
 
             $data = $request->except(['banner_image','liability_insurance','company_registry']);
             if ($request->hasFile('banner_image')) {
-                $data['banner_image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImage');
+                $data['banner_image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImages');
             }
             if ($request->hasFile('liability_insurance')) {
                 $data['liability_insurance'] = $this->uploadDocuments($request->file('liability_insurance'), 'supplier/documents/liability');

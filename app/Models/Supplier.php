@@ -10,11 +10,35 @@ class Supplier extends Model
     use HasFactory;
 
 
-    protected $fillable = ['user_id','banner_image','company_name','director_name','address',
-        'vat_number','sector','description','company_registry','liability_insurance','status','reason'];
+    protected $fillable = [
+        'user_id','banner_image','company_name','director_name','address',
+        'vat_number','sector','description','company_registry','liability_insurance','status','reason'
+    ];
 
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
+    public function getLiabilityInsuranceAttribute($value)
+    {
+        return $value ? '/supplier/documents/liability/'.$value : null;
+    }
 
+    public function getCompanyRegistryAttribute($value)
+    {
+        return $value ? '/supplier/documents/companyRegistry/'.$value : null;
+    }
+
+    public function getBannerImageAttribute($value)
+    {
+        return $value ? '/images/users/bannerImages/'.$value : null;
+    }
 
 }
