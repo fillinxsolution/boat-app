@@ -74,6 +74,6 @@ Route::prefix('settings')->as('settings.')->group(function () {
 
     Route::controller(SettingController::class)->group(function () {
         Route::post('store',    'store')->name('store');
-        Route::get('admin'      ,     'admin')->name('admin');
+        Route::get('admin',     'admin')->name('admin');
     });
 });

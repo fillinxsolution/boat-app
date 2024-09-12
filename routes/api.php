@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,11 +22,15 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
-Route::post('/login-google', [AuthController::class, 'loginGoogle']);
+Route::post('/social-login', [AuthController::class, 'socialLogin']);
+
+Route::apiResource('categories', CategoryController::class);
+Route::get('sub-categories/{id}', [CategoryController::class,'subCategory']);
+Route::get('is-popular', [CategoryController::class,'isPopular']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
-    Route::apiResource('categories', CategoryController::class);
-    Route::get('sub-categories', [CategoryController::class,'subCategory']);
+    Route::apiResource('suppliers', SupplierController::class);
 });
 

@@ -16,10 +16,10 @@ class RoleController extends BaseController
         private RoleRepositoryInterface $roleRepository,
         private PermissionRepositoryInterface $permissionRepository
     ) {
-//        $this->middleware('permission:adminRoles-list', ['only' => ['index']]);
-//        $this->middleware('permission:adminRoles-create', ['only' => ['store']]);
-//        $this->middleware('permission:adminRoles-edit', ['only' => ['edit', 'update']]);
-//        $this->middleware('permission:adminRoles-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:adminRoles-list', ['only' => ['index']]);
+        $this->middleware('permission:adminRoles-create', ['only' => ['store']]);
+        $this->middleware('permission:adminRoles-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:adminRoles-delete', ['only' => ['destroy']]);
 
     }
 

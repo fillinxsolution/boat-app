@@ -34,6 +34,18 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
+     * Create or update user.
+     */
+    public function updateApiUser(array $data, $id = null): User
+    {
+        $user = User::updateOrCreate(
+            ['id' => $id],
+            $data
+        );
+        return $user;
+    }
+
+    /**
      * Find user by id.
      */
     public function findById($id): User

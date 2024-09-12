@@ -11,7 +11,7 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
 {
 
     /**
-     * All integration category list.
+     * All  category list.
      */
     public function list(): Collection
     {
@@ -19,11 +19,19 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
     }
 
      /**
-     * Active integration category list.
+     * Active  category list.
      */
     public function activeList(): Collection
     {
-        return Category::where('status', 1)->get();
+        return Category::where('parent_id','=',null)->where('status', 1)->get();
+    }
+
+    /**
+     * Popular  category list.
+     */
+    public function isPopular(): Collection
+    {
+        return Category::where('is_popular','Yes')->where('status', 1)->get();
     }
 
     /**
@@ -44,6 +52,17 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
     public function findById($id): Category
     {
         return Category::find($id);
+    }
+
+
+    /**
+     * Find integration category by id.
+     */
+    public function subCategory($id)
+    {
+
+        $cat =  Category::where('parent_id',$id)->where('status', 1)->get();
+        return $cat;
     }
 
     /**
