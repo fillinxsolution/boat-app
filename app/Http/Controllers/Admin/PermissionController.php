@@ -14,8 +14,9 @@ class PermissionController extends BaseController
 {
     public function __construct(private PermissionRepositoryInterface $permissionRepository)
     {
-             $this->middleware('permission:adminPermissions-list|adminPermissions-create|adminPermissions-edit|adminPermissions-delete', ['only' => ['index']]);
-             $this->middleware('permission:adminPermissions-edit', ['only' => ['update']]);
+        $this->middleware('permission:permissions-list', ['only' => ['index']]);
+        $this->middleware('permission:permissions-create', ['only' => ['store']]);
+        $this->middleware('permission:permissions-edit', ['only' => ['edit', 'update']]);
     }
 
     /**

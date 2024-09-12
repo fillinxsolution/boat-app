@@ -53,6 +53,19 @@
 
                 </x-nav-item>
 
+                @canany(['suppliers-list' || 'captains-list'])
+                    <x-nav-item active="users.*" icon="users-three" title="Users" :submenu="true">
+                        @can('suppliers-list')
+                            <x-nav-item route="users.suppliers.index" active="users.suppliers.*"
+                                        title="Suppliers"/>
+                        @endcan
+                        @can('captains-list')
+                            <x-nav-item route="users.captains.index" active="users.captains.*"
+                                        title="Captains"/>
+                        @endcan
+                    </x-nav-item>
+                @endcanany
+
 
                 @canany(['serviceCategory-list'])
                 <x-nav-item active="catalog.*" icon="notebook" title="Catalog" :submenu="true">
