@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\SupplierController;
+use App\Http\Controllers\API\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,11 +27,14 @@ Route::post('/social-login', [AuthController::class, 'socialLogin']);
 
 Route::apiResource('categories', CategoryController::class);
 Route::get('sub-categories/{id}', [CategoryController::class,'subCategory']);
-Route::get('is-popular', [CategoryController::class,'isPopular']);
+Route::get('category/is-popular', [CategoryController::class,'isPopular']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('suppliers', SupplierController::class);
+    Route::apiResource('services', ServiceController::class);
+    Route::get('service/active', [ServiceController::class,'activeList']);
+    Route::post('service/changeStatus/{id}', [ServiceController::class,'changeStatus']);
 });
 

@@ -11,11 +11,20 @@ class ServiceRepository implements ServiceRepositoryInterface
 {
 
     /**
-     * Login User list.
+     *  list.
      */
     public function list($id):Collection
     {
-        $supplier =  Service::where('user_id',$id)->get();
+        $supplier =  Service::with(['images','faqs'])->where('supplier_id',$id)->get();
+        return $supplier;
+    }
+
+    /**
+     * Active list.
+     */
+    public function activeList($id):Collection
+    {
+        $supplier =  Service::with(['images','faqs'])->where('supplier_id',$id)->where('status','Active')->get();
         return $supplier;
     }
 
