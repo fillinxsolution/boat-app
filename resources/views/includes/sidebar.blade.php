@@ -76,10 +76,10 @@
                 </x-nav-item>
                 @endcanany
 
-                <x-nav-item active="pages.*" icon="notebook" title="Pages" :submenu="true">
-                    <x-nav-item route="pages.aboutUs.index" active="pages.aboutUs.*"
-                                title="About Us"/>
-                </x-nav-item>
+{{--                <x-nav-item active="pages.*" icon="notebook" title="Pages" :submenu="true">--}}
+{{--                    <x-nav-item route="pages.aboutUs.index" active="pages.aboutUs.*"--}}
+{{--                                title="About Us"/>--}}
+{{--                </x-nav-item>--}}
 
                     <x-nav-item active="settings.*" icon="gear-six" title="Settings" :submenu="true">
                     <x-nav-item route="settings.admin" title="Admin"/>

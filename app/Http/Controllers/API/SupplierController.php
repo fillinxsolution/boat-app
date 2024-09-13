@@ -67,7 +67,6 @@ class SupplierController extends BaseController
     public function update(Request $request,$id)
     {
         try {
-//            $uid = auth()->user()->id;
             $request->validate([
                 'company_name' => 'required',
                 'director_name' => 'required',
@@ -91,7 +90,7 @@ class SupplierController extends BaseController
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
-        return $this->sendResponse(null,'Supplier Documents Update SuccessFully',200);
+        return $this->sendResponse($data,'Supplier Documents Update SuccessFully',200);
     }
 
 

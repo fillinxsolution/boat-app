@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\SupplierRepositoryInterface;
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -15,7 +16,7 @@ class SupplierRepository implements SupplierRepositoryInterface
      */
     public function list($id)
     {
-        $supplier =  Supplier::where('user_id',$id)->first();
+        $supplier =  User::with('supplier')->find($id);
         return $supplier;
     }
 

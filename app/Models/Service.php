@@ -13,5 +13,15 @@ class Service extends Model
     protected $fillable = ['category_id','supplier_id','name','description','status'];
 
 
+    public function images()
+    {
+        return $this->hasMany(ServiceImage::class);
+    }
+
+    public function faqs()
+    {
+        return $this->hasMany(ServiceFaq::class);
+    }
+
 
 }

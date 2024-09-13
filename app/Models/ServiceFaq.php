@@ -11,4 +11,20 @@ class ServiceFaq extends Model
 
 
     protected $fillable = ['service_id','question','answers'];
+
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }
