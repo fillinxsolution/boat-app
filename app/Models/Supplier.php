@@ -29,12 +29,12 @@ class Supplier extends Model
 
     public function getLiabilityInsuranceAttribute($value)
     {
-        return $value ? '/supplier/documents/liability/'.$value : null;
+        return $value ? '/documents/supplier/documents/liability/'.$value : null;
     }
 
     public function getCompanyRegistryAttribute($value)
     {
-        return $value ? '/supplier/documents/companyRegistry/'.$value : null;
+        return $value ? '/documents/supplier/documents/companyRegistry/'.$value : null;
     }
 
     public function getBannerImageAttribute($value)
