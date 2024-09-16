@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->text('description')->nullable();
             $table->string('captain_name')->nullable();
-                $table->string('captain_email')->nullable();
+            $table->string('captain_email')->nullable();
             $table->enum('status',['Active','DeActive'])->default('Active');
             $table->timestamps();
         });
