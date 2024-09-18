@@ -75,7 +75,7 @@ class PortfolioController extends BaseController
             $portfolio = $this->portfolioRepository->storeOrUpdate($data);
             foreach ($request->images as $image) {
                 $portfolioImage = new PortfolioImage();
-                $portfolioImage->service_id = $portfolio->id;
+                $portfolioImage->portfolio_id = $portfolio->id;
                 $url = $this->uploadFile($image, 'portfolio/images');
                 $portfolioImage->image = $url;
                 $portfolioImage->save();
@@ -117,7 +117,7 @@ class PortfolioController extends BaseController
                 foreach ($request->images as $image) {
                     $portfolio->images()->delete();
                     $portfolioImage = new PortfolioImage();
-                    $portfolioImage->service_id = $portfolio->id;
+                    $portfolioImage->portfolio_id = $portfolio->id;
                     $url = $this->uploadFile($image, 'portfolio/images');
                     $portfolioImage->image = $url;
                     $portfolioImage->save();
