@@ -214,6 +214,14 @@ class PermissionsSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
 
+            [
+                'name' => 'supplier-view',
+                'display_name' => 'supplier view',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
 
             /* ---------------------------------- Captains Permission --------------------------------- */
             [

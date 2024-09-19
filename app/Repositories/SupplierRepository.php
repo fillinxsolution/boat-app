@@ -20,6 +20,16 @@ class SupplierRepository implements SupplierRepositoryInterface
         return $supplier;
     }
 
+
+    /**
+     *  list.
+     */
+    public function webList() :Collection
+    {
+        $suppliers =  User::has('supplier')->with('supplier')->where('is_admin',0)->get();
+        return $suppliers;
+    }
+
     /**
      * Create & save supplier.
      */
@@ -30,6 +40,15 @@ class SupplierRepository implements SupplierRepositoryInterface
             $data
         );
         return $supplier;
+    }
+
+    /**
+     * Single supplier details.
+     */
+
+    public function supplierDetail($id)
+    {
+        return User::with('supplier')->find($id);
     }
 
     /**

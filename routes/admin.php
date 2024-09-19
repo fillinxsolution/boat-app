@@ -59,13 +59,20 @@ Route::prefix('catalog')->as('catalog.')->group(function () {
  */
 Route::prefix('users')->as('users.')->group(function () {
 
-    /* ------------------------- Supplier Roles Routes ------------------------ */
+    /* ------------------------- Supplier Routes ------------------------ */
 
-    Route::patch('suppliers/change/{id}', 'SupplierController@change')->name('suppliers.change');
-    Route::get('suppliers/list', 'SupplierController@list')->name('suppliers.list');
+
     Route::resource('suppliers', SupplierController::class);
 
-    /* ------------------------- Captains Category Routes ------------------------ */
+    Route::controller(SupplierController::class)->prefix('suppliers')->as('suppliers.')->group(function () {
+        Route::post('suppliers/change/{id}', 'change')->name('change');
+        Route::get('suppliers/list', 'list')->name('list');
+        Route::get('/{id}/info', 'info')->name('info');
+        Route::get('/{id}/services', 'services')->name('services');
+        Route::get('/{id}/documents', 'documents')->name('documents');
+    });
+    
+    /* ------------------------- Captains  Routes ------------------------ */
 
     Route::patch('captains/change/{id}', 'CaptainController@change')->name('captains.change');
     Route::get('captains/list', 'CaptainController@list')->name('captains.list');

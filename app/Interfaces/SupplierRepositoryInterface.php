@@ -10,5 +10,7 @@ interface SupplierRepositoryInterface
 
     public function findById($id);
 
+    public function supplierDetail(string $id);
+
     public function destroyById($id);
 }
