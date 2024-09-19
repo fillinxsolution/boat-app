@@ -71,7 +71,7 @@ Route::prefix('users')->as('users.')->group(function () {
         Route::get('/{id}/services', 'services')->name('services');
         Route::get('/{id}/documents', 'documents')->name('documents');
     });
-    
+
     /* ------------------------- Captains  Routes ------------------------ */
 
     Route::patch('captains/change/{id}', 'CaptainController@change')->name('captains.change');
