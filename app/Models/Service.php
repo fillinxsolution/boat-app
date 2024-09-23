@@ -23,5 +23,10 @@ class Service extends Model
         return $this->hasMany(ServiceFaq::class);
     }
 
+    public function tags()
+    {
+        return $this->hasMany(ServiceTag::class);
+    }
+
 
 }

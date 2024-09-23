@@ -2,15 +2,18 @@
 
 namespace App\Interfaces;
 
-interface SupplierRepositoryInterface
+interface TestimonialRepositoryInterface
 {
-    public function list($id);
+    public function list();
+
+    public function activeList();
+
+    public function isPopular();
 
     public function storeOrUpdate(array $data, $id = null);
 
     public function findById($id);
 
-    public function supplierDetail(string $id);
-
     public function destroyById($id);
+
 }

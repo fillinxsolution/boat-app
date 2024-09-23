@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\ServiceRepositoryInterface;
 use App\Models\ServiceFaq;
 use App\Models\ServiceImage;
+use App\Models\ServiceTag;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 
@@ -68,6 +69,7 @@ class ServiceController extends BaseController
                 'description' => 'required',
                 'supplier_id' => 'required',
                 'faqs' => 'required|array',
+                'tags' => 'required|array',
                 'images' => 'required|array',
                 'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
@@ -87,6 +89,12 @@ class ServiceController extends BaseController
                 $serviceFaq->question = $faq['question'];
                 $serviceFaq->answers = $faq['answers'];
                 $serviceFaq->save();
+            }
+            foreach ($request->tags as $tag) {
+                $serviceTag = new ServiceTag();
+                $serviceTag->service_id = $service->id;
+                $serviceTag->tags = $tag;
+                $serviceTag->save();
             }
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -141,6 +149,15 @@ class ServiceController extends BaseController
                     $serviceFaq->question = $faq['question'];
                     $serviceFaq->answers = $faq['answers'];
                     $serviceFaq->save();
+                }
+                if ($request->has('tags')) {
+                    $service->tags()->delete();
+                    foreach ($request->tags as $tag) {
+                        $serviceTag = new ServiceTag();
+                        $serviceTag->service_id = $service->id;
+                        $serviceTag->tags = $tag;
+                        $serviceTag->save();
+                    }
                 }
             }
         } catch (\Throwable $th) {

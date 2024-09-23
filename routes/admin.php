@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ServiceCategoryController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\CaptainController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -59,13 +61,20 @@ Route::prefix('catalog')->as('catalog.')->group(function () {
  */
 Route::prefix('users')->as('users.')->group(function () {
 
-    /* ------------------------- Supplier Roles Routes ------------------------ */
+    /* ------------------------- Supplier Routes ------------------------ */
 
-    Route::patch('suppliers/change/{id}', 'SupplierController@change')->name('suppliers.change');
-    Route::get('suppliers/list', 'SupplierController@list')->name('suppliers.list');
+
     Route::resource('suppliers', SupplierController::class);
 
-    /* ------------------------- Captains Category Routes ------------------------ */
+    Route::controller(SupplierController::class)->prefix('suppliers')->as('suppliers.')->group(function () {
+        Route::post('suppliers/change/{id}', 'change')->name('change');
+        Route::get('suppliers/list', 'list')->name('list');
+        Route::get('/{id}/info', 'info')->name('info');
+        Route::get('/{id}/services', 'services')->name('services');
+        Route::get('/{id}/documents', 'documents')->name('documents');
+    });
+
+    /* ------------------------- Captains  Routes ------------------------ */
 
     Route::patch('captains/change/{id}', 'CaptainController@change')->name('captains.change');
     Route::get('captains/list', 'CaptainController@list')->name('captains.list');
@@ -81,4 +90,24 @@ Route::prefix('settings')->as('settings.')->group(function () {
         Route::post('store',    'store')->name('store');
         Route::get('admin',     'admin')->name('admin');
     });
+});
+
+
+/**
+ * Pages Routes.
+ */
+Route::prefix('pages')->as('pages.')->group(function () {
+    /* -------------------------  Blogs Routes ------------------------ */
+    Route::patch('blogs/change/{id}', 'BlogController@change')->name('blogs.change');
+    Route::get('blogs/list', 'BlogController@list')->name('blogs.list');
+    Route::resource('blogs', BlogController::class);
+
+    /* -------------------------  Testimonials Routes ------------------------ */
+
+    Route::patch('testimonials/change/{id}', 'TestimonialController@change')->name('testimonials.change');
+    Route::get('testimonials/list', 'TestimonialController@list')->name('testimonials.list');
+    Route::resource('testimonials', TestimonialController::class);
+
+
+
 });

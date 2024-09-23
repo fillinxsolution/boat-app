@@ -4,20 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Portfolio extends Model
+class Blog extends Model
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
 
-    protected $table = 'portfolio';
-
-
-   protected $fillable = ['supplier_id','category_id','title','yacht_name','location','description','captain_name','captain_email','status'];
+  protected $fillable = ['title','body','image','is_featured','status'];
 
 
-    public function images()
+    public function getImageAttribute($value)
     {
-        return $this->hasMany(PortfolioImage::class);
+        return $value ? '/images/blogs/'.$value : null;
     }
 
     /**
@@ -25,9 +23,9 @@ class Portfolio extends Model
      *
      * @var array<int, string>
      */
-
     protected $hidden = [
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
 }

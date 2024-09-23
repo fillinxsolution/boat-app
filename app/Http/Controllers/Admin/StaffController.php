@@ -88,7 +88,7 @@ class StaffController extends BaseController
             ]);
 
             $data = $request->only(['first_name', 'password', 'email']);
-            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'users') : 'https://tapday.s3.ap-south-1.amazonaws.com/v2/users/VC2ycVtfHccmAcZzU9dEExh7Lu0VOa8y2mH1Jn4t.svg';
+            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'users') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
             $roles =  array_map('intval', $request->roles);
             $this->userRepository->storeOrUpdate($data, $roles);
         } catch (\Throwable $th) {

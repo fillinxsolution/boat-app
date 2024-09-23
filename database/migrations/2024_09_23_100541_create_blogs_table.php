@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_images', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->text('title')->nullable();
+            $table->longText('body')->nullable();
             $table->string('image')->nullable();
+            $table->enum('is_featured',['Yes','No'])->nullable();
+            $table->enum('status',['Active','DeActive'])->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_images');
+        Schema::dropIfExists('blogs');
     }
 };

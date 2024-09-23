@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use App\Interfaces\ServiceCategoryRepositoryInterface;
-use App\Models\Category;
+use App\Http\Controllers\Controller;
+use App\Interfaces\BlogRepositoryInterface;
 use App\Traits\UploadTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -12,16 +12,16 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class ServiceCategoryController extends BaseController
+class BlogController extends BaseController
 {
-       use UploadTrait;
+    use UploadTrait;
     public function __construct(
-        private ServiceCategoryRepositoryInterface $serviceCategoryRepository,
+        private BlogRepositoryInterface $blogRepository,
     ) {
-        $this->middleware('permission:serviceCategory-list', ['only' => ['index', 'show']]);
-        $this->middleware('permission:serviceCategory-create', ['only' => ['store']]);
-        $this->middleware('permission:serviceCategory-edit', ['only' => ['edit', 'update','change']]);
-        $this->middleware('permission:serviceCategory-delete', ['only' => ['destroy']]);
+//        $this->middleware('permission:blogs-list', ['only' => ['index', 'show']]);
+//        $this->middleware('permission:blogs-create', ['only' => ['store']]);
+//        $this->middleware('permission:blogs-edit', ['only' => ['edit', 'update','change']]);
+//        $this->middleware('permission:blogs-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -29,7 +29,7 @@ class ServiceCategoryController extends BaseController
      */
     public function index()
     {
-        return view('pages.catalog.services-category.index');
+        return view('pages.blogs.index');
     }
 
     /**
@@ -37,13 +37,13 @@ class ServiceCategoryController extends BaseController
      */
     public function list(): JsonResponse
     {
-        $data = $this->serviceCategoryRepository->list();
+        $data = $this->blogRepository->list();
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                return view('pages.catalog.services-category.actions', compact('row'));
+                return view('pages.blogs.actions', compact('row'));
             })->editColumn('status', function ($row) {
-                return view('pages.catalog.services-category.status', compact('row'));
+                return view('pages.blogs.status', compact('row'));
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -54,9 +54,7 @@ class ServiceCategoryController extends BaseController
      */
     public function create(): View
     {
-        $categories = $this->serviceCategoryRepository->activeList();
-
-        return view('pages.catalog.services-category.create',compact('categories'));
+        return view('pages.blogs.create');
     }
 
     /**
@@ -66,19 +64,19 @@ class ServiceCategoryController extends BaseController
     {
         try {
             $request->validate([
-                'name' => 'required|string|unique:categories,name',
+                'title' => 'required',
                 'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
-                'short_description' => 'required',
+                'body' => 'required',
                 'status' => 'required',
             ]);
 
             $data = $request->except('image');
-            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'categories') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
-            $this->serviceCategoryRepository->storeOrUpdate($data);
+            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'blogs') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
+            $this->blogRepository->storeOrUpdate($data);
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return $this->redirectSuccess(route('catalog.category.index'), 'Category created successfully.');
+        return $this->redirectSuccess(route('pages.blogs.index'), 'Blog created successfully.');
     }
 
     /**
@@ -94,9 +92,8 @@ class ServiceCategoryController extends BaseController
      */
     public function edit(string $id): RedirectResponse|View
     {
-            $category = $this->serviceCategoryRepository->findById($id);
-            $categories = $this->serviceCategoryRepository->activeList();
-            return view('pages.catalog.services-category.edit', compact('category','categories'));
+        $blog = $this->blogRepository->findById($id);
+        return view('pages.blogs.edit', compact('blog'));
     }
 
     /**
@@ -106,20 +103,20 @@ class ServiceCategoryController extends BaseController
     {
         try {
             $request->validate([
-                'name' => 'required|string|unique:categories,name,' . $id,
-                'short_description' => 'required',
+                'name' => 'required',
+                'body' => 'required',
                 'status' => 'required'
             ]);
 
             $data = $request->except('image');
             if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadFile($request->file('image'), 'categories');
+                $data['image'] = $this->uploadFile($request->file('image'), 'blogs');
             }
-            $this->serviceCategoryRepository->storeOrUpdate($data, $id);
+            $this->blogRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return $this->redirectSuccess(route('catalog.category.index'), 'Category updated successfully.');
+        return $this->redirectSuccess(route('pages.blogs.index'), 'Blog updated successfully.');
     }
 
     /**
@@ -128,11 +125,11 @@ class ServiceCategoryController extends BaseController
     public function destroy(string $id): RedirectResponse
     {
         try {
-            $this->serviceCategoryRepository->destroyById($id);
+            $this->blogRepository->destroyById($id);
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return  $this->redirectSuccess(route('catalog.category.index'), 'Category deleted successfully');
+        return  $this->redirectSuccess(route('pages.blogs.index'), 'Blog deleted successfully');
     }
 
     public function change(Request $request, string $id)
@@ -142,10 +139,10 @@ class ServiceCategoryController extends BaseController
             if ($request->field == 'status') {
                 $data['status'] = $request->boolean('status'); // Use boolean to handle checkbox
             }
-            $this->serviceCategoryRepository->storeOrUpdate($data, $id);
+            $this->blogRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['msg' => $th->getMessage()]);
         }
-        return $this->redirectSuccess(route('catalog.category.index'), 'Category changed successfully.');
+        return $this->redirectSuccess(route('pages.blogs.index'), 'Blog changed successfully.');
     }
 }

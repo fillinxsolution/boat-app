@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use App\Interfaces\ServiceCategoryRepositoryInterface;
-use App\Models\Category;
+use App\Http\Controllers\Controller;
+use App\Interfaces\TestimonialRepositoryInterface;
 use App\Traits\UploadTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -12,16 +12,16 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class ServiceCategoryController extends BaseController
+class TestimonialController extends BaseController
 {
-       use UploadTrait;
+    use UploadTrait;
     public function __construct(
-        private ServiceCategoryRepositoryInterface $serviceCategoryRepository,
+        private TestimonialRepositoryInterface $testimonialRepository,
     ) {
-        $this->middleware('permission:serviceCategory-list', ['only' => ['index', 'show']]);
-        $this->middleware('permission:serviceCategory-create', ['only' => ['store']]);
-        $this->middleware('permission:serviceCategory-edit', ['only' => ['edit', 'update','change']]);
-        $this->middleware('permission:serviceCategory-delete', ['only' => ['destroy']]);
+//        $this->middleware('permission:testimonials-list', ['only' => ['index', 'show']]);
+//        $this->middleware('permission:testimonials-create', ['only' => ['store']]);
+//        $this->middleware('permission:testimonials-edit', ['only' => ['edit', 'update','change']]);
+//        $this->middleware('permission:testimonials-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -29,7 +29,7 @@ class ServiceCategoryController extends BaseController
      */
     public function index()
     {
-        return view('pages.catalog.services-category.index');
+        return view('pages.testimonials.index');
     }
 
     /**
@@ -37,13 +37,13 @@ class ServiceCategoryController extends BaseController
      */
     public function list(): JsonResponse
     {
-        $data = $this->serviceCategoryRepository->list();
+        $data = $this->testimonialRepository->list();
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                return view('pages.catalog.services-category.actions', compact('row'));
+                return view('pages.testimonials.actions', compact('row'));
             })->editColumn('status', function ($row) {
-                return view('pages.catalog.services-category.status', compact('row'));
+                return view('pages.testimonials.status', compact('row'));
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -54,9 +54,7 @@ class ServiceCategoryController extends BaseController
      */
     public function create(): View
     {
-        $categories = $this->serviceCategoryRepository->activeList();
-
-        return view('pages.catalog.services-category.create',compact('categories'));
+        return view('pages.testimonials.create');
     }
 
     /**
@@ -66,19 +64,19 @@ class ServiceCategoryController extends BaseController
     {
         try {
             $request->validate([
-                'name' => 'required|string|unique:categories,name',
+                'name' => 'required',
                 'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
-                'short_description' => 'required',
+                'comment' => 'required',
                 'status' => 'required',
             ]);
 
             $data = $request->except('image');
-            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'categories') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
-            $this->serviceCategoryRepository->storeOrUpdate($data);
+            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'testimonials') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
+            $this->testimonialRepository->storeOrUpdate($data);
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return $this->redirectSuccess(route('catalog.category.index'), 'Category created successfully.');
+        return $this->redirectSuccess(route('pages.testimonials.index'), 'Testimonial created successfully.');
     }
 
     /**
@@ -94,9 +92,8 @@ class ServiceCategoryController extends BaseController
      */
     public function edit(string $id): RedirectResponse|View
     {
-            $category = $this->serviceCategoryRepository->findById($id);
-            $categories = $this->serviceCategoryRepository->activeList();
-            return view('pages.catalog.services-category.edit', compact('category','categories'));
+        $testimonial = $this->testimonialRepository->findById($id);
+        return view('pages.testimonials.edit', compact('testimonial'));
     }
 
     /**
@@ -106,20 +103,20 @@ class ServiceCategoryController extends BaseController
     {
         try {
             $request->validate([
-                'name' => 'required|string|unique:categories,name,' . $id,
-                'short_description' => 'required',
+                'name' => 'required',
+                'comment' => 'required',
                 'status' => 'required'
             ]);
 
             $data = $request->except('image');
             if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadFile($request->file('image'), 'categories');
+                $data['image'] = $this->uploadFile($request->file('image'), 'testimonials');
             }
-            $this->serviceCategoryRepository->storeOrUpdate($data, $id);
+            $this->testimonialRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return $this->redirectSuccess(route('catalog.category.index'), 'Category updated successfully.');
+        return $this->redirectSuccess(route('pages.testimonials.index'), 'Testimonial updated successfully.');
     }
 
     /**
@@ -128,11 +125,11 @@ class ServiceCategoryController extends BaseController
     public function destroy(string $id): RedirectResponse
     {
         try {
-            $this->serviceCategoryRepository->destroyById($id);
+            $this->testimonialRepository->destroyById($id);
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return  $this->redirectSuccess(route('catalog.category.index'), 'Category deleted successfully');
+        return  $this->redirectSuccess(route('pages.testimonials.index'), 'Testimonial deleted successfully');
     }
 
     public function change(Request $request, string $id)
@@ -142,10 +139,10 @@ class ServiceCategoryController extends BaseController
             if ($request->field == 'status') {
                 $data['status'] = $request->boolean('status'); // Use boolean to handle checkbox
             }
-            $this->serviceCategoryRepository->storeOrUpdate($data, $id);
+            $this->testimonialRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['msg' => $th->getMessage()]);
         }
-        return $this->redirectSuccess(route('catalog.category.index'), 'Category changed successfully.');
+        return $this->redirectSuccess(route('pages.testimonials.index'), 'Testimonial changed successfully.');
     }
 }
