@@ -4,30 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Portfolio extends Model
+class Testimonial extends Model
 {
-    use HasFactory;
-
-    protected $table = 'portfolio';
+    use HasFactory , SoftDeletes;
 
 
-   protected $fillable = ['supplier_id','category_id','title','yacht_name','location','description','captain_name','captain_email','status'];
+     protected $fillable = ['name','comment','designation','image','is_featured','status','stars'];
 
-
-    public function images()
-    {
-        return $this->hasMany(PortfolioImage::class);
-    }
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-
     protected $hidden = [
         'created_at',
         'updated_at',
+        'deleted_at',
+
     ];
 }

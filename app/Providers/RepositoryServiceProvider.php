@@ -9,6 +9,8 @@ use App\Interfaces\{PermissionRepositoryInterface,
     ServiceCategoryRepositoryInterface,
     ServiceRepositoryInterface,
     SupplierRepositoryInterface,
+    BlogRepositoryInterface,
+    TestimonialRepositoryInterface,
     UserRepositoryInterface};
 
 use App\Repositories\{PermissionRepository,
@@ -17,6 +19,8 @@ use App\Repositories\{PermissionRepository,
     ServiceCategoryRepository,
     ServiceRepository,
     SupplierRepository,
+    BlogRepository,
+    TestimonialRepository,
     UserRepository};
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -33,6 +37,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SupplierRepositoryInterface::class, SupplierRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
         $this->app->bind(PortfolioRepositoryInterface::class, PortfolioRepository::class);
+        $this->app->bind(BlogRepositoryInterface::class, BlogRepository::class);
+        $this->app->bind(TestimonialRepositoryInterface::class, TestimonialRepository::class);
 
     }
 

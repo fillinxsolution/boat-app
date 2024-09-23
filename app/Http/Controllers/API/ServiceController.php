@@ -150,6 +150,15 @@ class ServiceController extends BaseController
                     $serviceFaq->answers = $faq['answers'];
                     $serviceFaq->save();
                 }
+                if ($request->has('tags')) {
+                    $service->tags()->delete();
+                    foreach ($request->tags as $tag) {
+                        $serviceTag = new ServiceTag();
+                        $serviceTag->service_id = $service->id;
+                        $serviceTag->tags = $tag;
+                        $serviceTag->save();
+                    }
+                }
             }
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

@@ -15,8 +15,8 @@ class ServiceRepository implements ServiceRepositoryInterface
      */
     public function list($id):Collection
     {
-        $supplier =  Service::with(['images','faqs'])->where('supplier_id',$id)->get();
-        return $supplier;
+        $services =  Service::with(['images','faqs'])->where('supplier_id',$id)->get();
+        return $services;
     }
 
     /**
@@ -24,8 +24,8 @@ class ServiceRepository implements ServiceRepositoryInterface
      */
     public function activeList($id):Collection
     {
-        $supplier =  Service::with(['images','faqs'])->where('supplier_id',$id)->where('status','Active')->get();
-        return $supplier;
+        $services =  Service::with(['images','faqs'])->where('supplier_id',$id)->where('status','Active')->get();
+        return $services;
     }
 
     /**
@@ -33,11 +33,11 @@ class ServiceRepository implements ServiceRepositoryInterface
      */
     public function storeOrUpdate(array $data, $id = null): Service
     {
-        $supplier = Service::updateOrCreate(
+        $service = Service::updateOrCreate(
             ['id' => $id],
             $data
         );
-        return $supplier;
+        return $service;
     }
 
     /**

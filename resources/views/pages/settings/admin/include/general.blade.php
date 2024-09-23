@@ -5,6 +5,9 @@
 
         <x-input col="6" title="Email" name="values[admin_app_email]" :value="adminSettings('admin_app_email')" />
 
+        <x-input col="12" title="Home Page Video Link"  name="values[home_video_link]"
+                 :value="adminSettings('home_video_link')" />
+
         <x-input col="4" title="Logo Black" name="values[admin_app_logo_black]" type="dropify" :defaultFile="adminSettings('admin_app_logo_black') ?? null"
             dropifyHeight="205" />
         <x-input col="4" title="Logo White" name="values[admin_app_logo_white]" type="dropify" :defaultFile="adminSettings('admin_app_logo_white') ?? null"
@@ -19,5 +22,8 @@
 
         <x-input col="12" title="Footer Text" type="textarea" name="values[admin_footer_text]"
             :value="adminSettings('admin_footer_text')" />
+
+
+
     </div>
 </x-form>
