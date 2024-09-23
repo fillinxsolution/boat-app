@@ -22,10 +22,11 @@ class ServiceController extends BaseController
     {
 
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(Request  $request)
+    public function index(Request $request)
     {
 
         try {
@@ -74,7 +75,7 @@ class ServiceController extends BaseController
                 'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
-            $data = $request->except(['images','faqs']);
+            $data = $request->except(['images', 'faqs']);
             $service = $this->serviceRepository->storeOrUpdate($data);
             foreach ($request->images as $image) {
                 $serviceImage = new ServiceImage();
@@ -99,11 +100,11 @@ class ServiceController extends BaseController
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
-        return $this->sendResponse($service,'Service Created SuccessFully',200);
+        return $this->sendResponse($service, 'Service Created SuccessFully', 200);
     }
 
 
-    public function changeStatus(Request $request,$id)
+    public function changeStatus(Request $request, $id)
     {
         try {
             $data = $request->status;
@@ -114,7 +115,7 @@ class ServiceController extends BaseController
     }
 
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
             $request->validate([
@@ -123,23 +124,11 @@ class ServiceController extends BaseController
                 'description' => 'required',
                 'supplier_id' => 'required',
                 'faqs' => 'required|array',
-                 'images' => 'nullable|array',
-                 'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'images' => 'nullable|array',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
             $data = $request->except(['images', 'faqs']);
             $service = $this->serviceRepository->storeOrUpdate($data, $id);
-
-            // Update or upload new images (if images are provided)
-            if ($request->has('images')) {
-                foreach ($request->images as $image) {
-                    $service->images()->delete();
-                    $serviceImage = new ServiceImage();
-                    $serviceImage->service_id = $service->id;
-                    $url = $this->uploadFile($image, 'service/images');
-                    $serviceImage->image = $url;
-                    $serviceImage->save();
-                }
-            }
             // Update or create new FAQs
             if ($request->has('faqs')) {
                 $service->faqs()->delete(); // Assuming relationship: service -> faqs
@@ -166,5 +155,40 @@ class ServiceController extends BaseController
         return $this->sendResponse($service, 'Service Updated Successfully', 200);
 
     }
+
+    public function uploadImage(Request $request)
+    {
+        try {
+            $request->validate([
+                'service_id' => 'required',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+            $serviceImage = new ServiceImage();
+            $serviceImage->service_id = $request->service_id;
+            $url = $this->uploadFile($request->image, 'service/images');
+            $serviceImage->image = $url;
+            $serviceImage->save();
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+        return $this->sendResponse($serviceImage, 'Image Upload SuccessFully', 200);
+    }
+
+    public function deleteImage($id)
+    {
+        try {
+               $serviceImage = ServiceImage::find($id);
+               if ($serviceImage){
+                   $serviceImage->delete();
+               }else{
+                   return $this->sendResponse(null, 'Image Not Found', 404);
+               }
+
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+        return $this->sendResponse(null, 'Image Delete SuccessFully', 200);
+    }
+
 
 }
