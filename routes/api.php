@@ -68,6 +68,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('services', ServiceController::class);
     Route::get('service/active', [ServiceController::class,'activeList']);
+    Route::post('service/upload-image', [ServiceController::class,'uploadImage']);
+    Route::post('service/delete-image/{id}', [ServiceController::class,'deleteImage']);
     Route::post('service/changeStatus/{id}', [ServiceController::class,'changeStatus']);
 
     /* ------------------------- Portfolio Routes ------------------------ */
