@@ -25,6 +25,12 @@ class Category extends Model
     }
 
 
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+
     // Define parent category relation
     public function parent()
     {

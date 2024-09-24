@@ -7,10 +7,10 @@
             <x-input name="name" :value="$category->name ?? null" :required="true" />
 
             <x-input col="6" title="Category" name="parent_id" type="select" >
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}"
-                        {{ isset($category) && $category->id == $category->parent_id ? 'selected' : '' }}>
-                        {{ $category->name }}
+                @foreach ($parentCategories as $cat)
+                    <option value="{{ $cat->id }}"
+                        {{ isset($category) && $cat->id == $category->parent_id ? 'selected' : '' }}>
+                        {{ $cat->name }}
                     </option>
                 @endforeach
             </x-input>

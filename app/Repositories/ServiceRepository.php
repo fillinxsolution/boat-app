@@ -29,6 +29,15 @@ class ServiceRepository implements ServiceRepositoryInterface
     }
 
     /**
+     * Active list.
+     */
+    public function serviceByCategory($id):Collection
+    {
+        $services =  Service::with(['images'])->where('category_id',$id)->where('status','Active')->get();
+        return $services;
+    }
+
+    /**
      * Create & save Service.
      */
     public function storeOrUpdate(array $data, $id = null): Service

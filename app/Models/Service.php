@@ -13,6 +13,10 @@ class Service extends Model
     protected $fillable = ['category_id','supplier_id','name','description','status'];
 
 
+    public function category(){
+        return $this->belongsTo(Category::class,'category_id');
+    }
+
     public function images()
     {
         return $this->hasMany(ServiceImage::class);

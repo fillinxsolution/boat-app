@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\BaseController;
+use App\Interfaces\BlogRepositoryInterface;
 use App\Interfaces\ServiceCategoryRepositoryInterface;
+use App\Interfaces\ServiceRepositoryInterface;
+use App\Models\Category;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 
@@ -13,6 +16,8 @@ class CategoryController extends BaseController
 
     public function __construct(
         private ServiceCategoryRepositoryInterface $serviceCategoryRepository,
+        private BlogRepositoryInterface $blogRepository,
+        private ServiceRepositoryInterface $serviceRepository,
 
     )
     {
@@ -52,12 +57,23 @@ class CategoryController extends BaseController
      */
     public function subCategory($id)
     {
-
         try {
+            $category = $this->serviceCategoryRepository->findById($id);
             $subcategories = $this->serviceCategoryRepository->subCategory($id);
+            $firstLevelCategories = $subcategories->pluck('id');
+            $subChild = Category::whereIn('parent_id', $firstLevelCategories)->get();
+            $blogs =  $this->blogRepository->activeList();
+            $services =  $this->serviceRepository->serviceByCategory($id);
+            $result = [
+                'category' => $category,
+                'firstLevelCategories' => $subcategories,
+                'secondLevelCategories' => $subChild,
+                'blogs' =>  $blogs,
+                'services' =>  $services,
+            ];
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse($subcategories, 'Data Get SuccessFully', 200);
+        return $this->sendResponse($result, 'Data Get SuccessFully', 200);
     }
 }
