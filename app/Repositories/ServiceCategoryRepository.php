@@ -62,6 +62,14 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
         return Category::find($id);
     }
 
+    /**
+     * Find   by id.
+     */
+    public function nestedCategory($id): Category
+    {
+        return  Category::with(['children','children.children'])->find($id);
+    }
+
 
     /**
      * Find  category by id.

@@ -16,6 +16,8 @@ interface ServiceCategoryRepositoryInterface
 
     public function findById($id);
 
+    public function nestedCategory($id);
+
     public function destroyById($id);
 
     public function subCategory($id);
