@@ -58,16 +58,11 @@ class CategoryController extends BaseController
     public function subCategory($id)
     {
         try {
-            $category = $this->serviceCategoryRepository->findById($id);
-            $subcategories = $this->serviceCategoryRepository->subCategory($id);
-            $firstLevelCategories = $subcategories->pluck('id');
-            $subChild = Category::whereIn('parent_id', $firstLevelCategories)->get();
+            $category = $this->serviceCategoryRepository->nestedCategory($id);
             $blogs =  $this->blogRepository->activeList();
             $services =  $this->serviceRepository->serviceByCategory($id);
             $result = [
                 'category' => $category,
-                'firstLevelCategories' => $subcategories,
-                'secondLevelCategories' => $subChild,
                 'blogs' =>  $blogs,
                 'services' =>  $services,
             ];
