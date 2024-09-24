@@ -8,6 +8,8 @@ interface ServiceCategoryRepositoryInterface
 
     public function activeList();
 
+    public function activeCategory();
+
     public function isPopular();
 
     public function storeOrUpdate(array $data, $id = null);

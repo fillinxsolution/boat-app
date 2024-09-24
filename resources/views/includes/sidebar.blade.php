@@ -37,14 +37,11 @@
                     <x-nav-item route="dashboard" icon="house" title="Dashboards"/>
                 @endcan
 
-                @can('users-list')
-                    <x-nav-item route="staff.index" active="staff.*" icon="users-three" title="Staff"/>
-                @endcan
+{{--                @can('users-list')--}}
+                    <x-nav-item route="users.suppliers.index" active="staff.*" icon="users-three" title="Suppliers"/>
+{{--                @endcan--}}
 
-
-                @can('users-list')
-                    <x-nav-item route="staff.index" active="staff.*" icon="users-three" title="Staff"/>
-                @endcan
+                <x-nav-item route="users.captains.index" active="staff.*" icon="users-three" title="Captains"/>
 
                 {{--                @canany(['adminRoles-list', 'shopRoles-list'])--}}
                 <x-nav-item active="roles.*" icon="user-focus" title="Roles" :submenu="true">
@@ -62,11 +59,11 @@
                 <x-nav-item active="users.*" icon="users-three" title="Users" :submenu="true">
                     {{--                        @can('suppliers-list')--}}
                     <x-nav-item route="users.suppliers.index" active="users.suppliers.*"
-                                title="Suppliers"/>
+                                title="Admin"/>
                     {{--                        @endcan--}}
                     {{--                        @can('captains-list')--}}
                     <x-nav-item route="users.captains.index" active="users.captains.*"
-                                title="Captains"/>
+                                title="Users"/>
                     {{--                        @endcan--}}
                 </x-nav-item>
                 {{--                @endcanany--}}
@@ -95,14 +92,6 @@
                     </x-nav-item>
 
 {{--                @endcanany--}}
-
-
-
-
-                {{--                <x-nav-item active="pages.*" icon="notebook" title="Pages" :submenu="true">--}}
-                {{--                    <x-nav-item route="pages.aboutUs.index" active="pages.aboutUs.*"--}}
-                {{--                                title="About Us"/>--}}
-                {{--                </x-nav-item>--}}
 
                 <x-nav-item active="settings.*" icon="gear-six" title="Settings" :submenu="true">
                     <x-nav-item route="settings.admin" title="Admin"/>

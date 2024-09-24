@@ -34,28 +34,4 @@
 
     <div id="result"></div>
 
-    @push('scripts')
-        <script>
-            $(document).ready(function() {
-                $(document).on('click', '.edit-btn', function() {
-                    let id = $(this).data('id');
-                    let url = "{{ route('catalog.category.index') }}";
-                    // Perform Ajax request
-                    $.ajax({
-                        type: 'GET',
-                        url: `${url}/${id}/edit`,
-                        success: function(data, status) {
-                            $('#result').html(data);
-                            $('#modal_update').modal('show');
-                            // Handle the response
-                        },
-                        error: function(error) {
-                            console.log(error);
-                            // Handle errors
-                        }
-                    });
-                });
-            });
-        </script>
-    @endpush
 </x-app-layout>

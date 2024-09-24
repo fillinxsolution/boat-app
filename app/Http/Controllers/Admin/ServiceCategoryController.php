@@ -54,9 +54,9 @@ class ServiceCategoryController extends BaseController
      */
     public function create(): View
     {
-        $categories = $this->serviceCategoryRepository->activeList();
+        $parentCategories = $this->serviceCategoryRepository->activeCategory();
 
-        return view('pages.catalog.services-category.create',compact('categories'));
+        return view('pages.catalog.services-category.create',compact('parentCategories'));
     }
 
     /**

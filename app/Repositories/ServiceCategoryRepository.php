@@ -27,6 +27,14 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
     }
 
     /**
+     * Active category list.
+     */
+    public function activeCategory(): Collection
+    {
+        return Category::where('status', 1)->get();
+    }
+
+    /**
      * Popular  category list.
      */
     public function isPopular(): Collection
@@ -35,7 +43,7 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
     }
 
     /**
-     * Create & save Integration Category.
+     * Create & save  Category.
      */
     public function storeOrUpdate(array $data, $id = null): Category
     {
@@ -47,7 +55,7 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
     }
 
     /**
-     * Find  category by id.
+     * Find   by id.
      */
     public function findById($id): Category
     {
@@ -56,17 +64,17 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
 
 
     /**
-     * Find integration category by id.
+     * Find  category by id.
      */
     public function subCategory($id)
     {
 
-        $cat =  Category::where('parent_id',$id)->where('status', 1)->get();
+        $cat =  Category::where('parent_id',$id)->where('status', 1)->where('is_popular','=','Yes')->get();
         return $cat;
     }
 
     /**
-     * Delete integration category by id.
+     * Delete  category by id.
      */
     public function destroyById($id): bool
     {
