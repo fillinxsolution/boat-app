@@ -27,12 +27,13 @@ class AuthController extends BaseController
             'password' => Hash::make($validatedData['password']),
         ]);
 
-
-//        $user->assignRole($request->role);
-
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return $this->sendResponse($token, 'Your account has been created successfully.');
+        $result = [
+            'token' => $token,
+            'user' => $user->load('supplier'),
+        ];
+        return $this->sendResponse($result, 'Your account has been created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -53,7 +54,7 @@ class AuthController extends BaseController
 
             $data['access_token'] = $token;
             $data['token_type'] = 'Bearer';
-            $data['user'] = $user;
+            $data['user'] = $user->load('supplier');
 
             return $this->sendResponse($data, 'Login Successfully');
         } catch (QueryException $e) {
