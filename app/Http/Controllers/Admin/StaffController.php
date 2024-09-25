@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class StaffController extends BaseController
@@ -126,7 +127,10 @@ class StaffController extends BaseController
                 'roles'             => 'required'
             ]);
 
-            $data = $request->only(['name', 'password', 'email']);
+            $data = $request->only(['name', 'email']);
+            if ($request->password){
+                $data['password'] = Hash::make($request->password);
+            }
             if ($request->hasFile('image')) {
                 $data['image']  = $this->uploadFile($request->file('image'), 'users/staff');
             }

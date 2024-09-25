@@ -36,7 +36,7 @@ class UserRepository implements UserRepositoryInterface
             $data
         );
         if (count($roles) > 0) {
-            $user->assignRole($roles);
+            $user->syncRoles($roles);
         }
         return $user;
     }
