@@ -106,7 +106,7 @@ class StaffController extends BaseController
     {
         try {
             $staff = $this->userRepository->findById($id);
-            $roles = $this->roleRepository->list();
+            $roles = $this->roleRepository->webList();
             $staffRole = $staff->roles->pluck('id')->all();
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());

@@ -42,6 +42,8 @@ class SupplierController extends BaseController
                 'director_name' => 'required',
                 'address' => 'required',
                 'vat_number' => 'required',
+                'liability_insurance' => 'mimes:pdf|max:2048',
+                'company_registry' => 'mimes:pdf|max:2048',
             ]);
 
             $data = $request->except(['banner_image','liability_insurance','company_registry']);
@@ -72,6 +74,8 @@ class SupplierController extends BaseController
                 'director_name' => 'required',
                 'address' => 'required',
                 'vat_number' => 'required',
+                'liability_insurance' => 'mimes:pdf|max:2048',
+                'company_registry' => 'mimes:pdf|max:2048',
             ]);
 
             $data = $request->except(['banner_image','liability_insurance','company_registry']);
