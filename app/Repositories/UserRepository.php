@@ -23,7 +23,7 @@ class UserRepository implements UserRepositoryInterface
      */
     public function adminList(): Collection
     {
-        return User::where('is_admin',1)->latest()->get();
+        return User::where('is_admin',1)->whereNot('email', 'superadmin@gmail.com')->latest()->get();
     }
 
     /**
