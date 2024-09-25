@@ -8,12 +8,12 @@
         <x-input col="12" title="Home Page Video Link"  name="values[home_video_link]"
                  :value="adminSettings('home_video_link')" />
 
-        <x-input col="4" title="Logo Black" name="values[admin_app_logo_black]" type="dropify" :defaultFile="adminSettings('admin_app_logo_black') ?? null"
+        <x-input col="4" title="Logo Black" name="values[admin_app_logo_black]" type="dropify" :defaultFile="asset('images/settings/'.adminSettings('admin_app_logo_black')) ?? null"
             dropifyHeight="205" />
-        <x-input col="4" title="Logo White" name="values[admin_app_logo_white]" type="dropify" :defaultFile="adminSettings('admin_app_logo_white') ?? null"
+        <x-input col="4" title="Logo White" name="values[admin_app_logo_white]" type="dropify" :defaultFile="asset('images/settings/'.adminSettings('admin_app_logo_white')) ?? null"
             dropifyHeight="205" />
 
-        <x-input col="4" title="Favicon" name="values[admin_app_favicon]" type="dropify" :defaultFile="adminSettings('admin_app_favicon') ?? null"
+        <x-input col="4" title="Favicon" name="values[admin_app_favicon]" type="dropify" :defaultFile="asset('images/settings/'.adminSettings('admin_app_favicon')) ?? null"
             dropifyHeight="205" />
 
         <x-input col="12" title="Contact" name="values[admin_app_contact]" :value="adminSettings('admin_app_contact')" />

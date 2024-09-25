@@ -33,6 +33,7 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'type' => 'required',
             'values' => 'required|array',
@@ -43,7 +44,6 @@ class SettingController extends Controller
         foreach ($validatedData['values'] as $key => $value) {
             if ($request->file('values.' . $key)) {
 
-//                $this->deleteSettingsFile($key);
              $value = $this->uploadFile($request->file('values.' . $key), 'settings');
             }
             $data[] = [
