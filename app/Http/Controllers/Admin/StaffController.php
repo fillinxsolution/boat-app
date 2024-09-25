@@ -66,7 +66,7 @@ class StaffController extends BaseController
     public function create(): View | RedirectResponse
     {
         try {
-            $roles = $this->roleRepository->list();
+            $roles = $this->roleRepository->webList();
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
@@ -120,16 +120,15 @@ class StaffController extends BaseController
     {
         try {
             $request->validate([
-                'first_name'  => 'required',
+                'name'  => 'required',
                 'email'     => 'required|email|unique:users,email,' . $id,
                 'password'          => 'same:confirm_password',
                 'roles'             => 'required'
             ]);
 
-            $data = $request->only(['first_name', 'first_name', 'password', 'email']);
+            $data = $request->only(['name', 'password', 'email']);
             if ($request->hasFile('image')) {
-                $this->deleteFile($request->old_img ?? null);
-                $data['image']  = $this->uploadFile($request->file('image'), 'users');
+                $data['image']  = $this->uploadFile($request->file('image'), 'users/staff');
             }
             $roles =  array_map('intval', $request->roles);
             $this->userRepository->storeOrUpdate($data, $roles, $id);

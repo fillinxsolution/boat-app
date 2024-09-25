@@ -18,13 +18,23 @@ class UserSeeder extends Seeder
     {
         $user1 = User::create([
             'name'          => 'Super Admin',
-            'email'         => 'admin@gmail.com',
+            'email'         => 'superadmin@gmail.com',
             'password'      => '123456789',
             'is_admin'      => 1,
         ]);
         $role1 = Role::where('name','Super Admin')->where('guard_name','web')->first();
 
         $user1->assignRole($role1);
+
+        $user2 = User::create([
+            'name'          => 'Admin',
+            'email'         => 'admin@gmail.com',
+            'password'      => '123456789',
+            'is_admin'      => 1,
+        ]);
+        $role2 = Role::where('name','Admin')->where('guard_name','web')->first();
+
+        $user2->assignRole($role2);
 
     }
 }
