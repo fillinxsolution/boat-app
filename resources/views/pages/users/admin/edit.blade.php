@@ -1,6 +1,6 @@
 <x-app-layout title="Update Staff">
 
-    <x-breadcrumb title="Update Staff" :back-button="route('staff.index')" />
+    <x-breadcrumb title="Update Staff" :back-button="route('users.staff.index')" />
 
 
     <!-- Content area -->
@@ -13,9 +13,9 @@
                     </div>
                     <div class="card-body">
 
-                        <x-form :route="route('staff.update', $staff->id)">
+                        <x-form :route="route('users.staff.update', $staff->id)">
                             {{ method_field('PATCH') }}
-                            @include('pages.staff.form')
+                            @include('pages.users.admin.form')
                         </x-form>
 
                     </div>

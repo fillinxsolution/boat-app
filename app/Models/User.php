@@ -24,12 +24,20 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'image',
         'is_admin',
         'password',
         'login_with_google',
         'login_with_facebook','is_active',
         'status','reason'
     ];
+
+
+    public function getImageAttribute($value)
+    {
+        return $value ? '/images/users/staff/'.$value : null;
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

@@ -3,6 +3,7 @@
     <div class="col-md-8">
 
         <div class="row g-2">
+
             <input type="hidden" name="old_image" value="{{ $staff->image ?? '' }}">
 
             <x-input col="12" name="name" :value="$staff->name ?? ''" :required="true" />
