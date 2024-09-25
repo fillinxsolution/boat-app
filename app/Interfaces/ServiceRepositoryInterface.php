@@ -9,6 +9,10 @@ interface ServiceRepositoryInterface
 
     public function serviceByCategory($id);
 
+    public function serviceByCategoryFilter($id);
+
+    public function limitServices();
+
     public function activeList($id);
 
     public function storeOrUpdate(array $data, $id = null);

@@ -42,6 +42,11 @@ Route::get('category/is-popular', [CategoryController::class,'isPopular']);
 Route::get('home', [HomeController::class,'index']);
 
 
+/* ------------------------- Category By Services  Routes ------------------------ */
+
+Route::get('serviceCategory/{id}', [ServiceController::class,'serviceCategory']);
+
+
 /* ------------------------- Blogs  Routes ------------------------ */
 
 Route::apiResource('blogs', BlogController::class);
