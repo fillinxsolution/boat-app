@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\ServiceRepositoryInterface;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class ServiceRepository implements ServiceRepositoryInterface
@@ -36,6 +37,26 @@ class ServiceRepository implements ServiceRepositoryInterface
         $services =  Service::with(['images'])->where('category_id',$id)->where('status','Active')->get();
         return $services;
     }
+
+    /**
+     * Active list.
+     */
+    public function serviceByCategoryFilter($id): LengthAwarePaginator
+    {
+            $services =  Service::with(['images'])->where('category_id',$id)->where('status','Active')->paginate(24);
+            return $services;
+    }
+
+    /**
+     * Active list.
+     */
+    public function limitServices()
+    {
+            $services =  Service::with(['images'])->where('status','Active')->limit(8);
+            return $services;
+    }
+
+
 
     /**
      * Create & save Service.

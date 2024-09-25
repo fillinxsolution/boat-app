@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
+use App\Interfaces\BlogRepositoryInterface;
+use App\Interfaces\ServiceCategoryRepositoryInterface;
 use App\Interfaces\ServiceRepositoryInterface;
 use App\Models\ServiceFaq;
 use App\Models\ServiceImage;
@@ -17,6 +19,9 @@ class ServiceController extends BaseController
 
     public function __construct(
         private ServiceRepositoryInterface $serviceRepository,
+        private ServiceCategoryRepositoryInterface $serviceCategoryRepository,
+        private BlogRepositoryInterface $blogRepository,
+
 
     )
     {
@@ -188,6 +193,25 @@ class ServiceController extends BaseController
             return $this->sendException($th->getMessage());
         }
         return $this->sendResponse(null, 'Image Delete SuccessFully', 200);
+    }
+
+
+    public function serviceCategory($id){
+        try {
+            $category = $this->serviceCategoryRepository->findById($id);
+            $blogs =  $this->blogRepository->activeList();
+            $services =  $this->serviceRepository->serviceByCategoryFilter($id);
+            $popularServices =  $this->serviceRepository->limitServices();
+            $result = [
+                'category' => $category,
+                'blogs' =>  $blogs,
+                'services' =>  $services,
+                'popularServices' =>  $popularServices,
+            ];
+        } catch (\Throwable $th) {
+            return $this->sendException([$th->getMessage()]);
+        }
+        return $this->sendResponse($result, 'Data Get SuccessFully', 200);
     }
 
 
