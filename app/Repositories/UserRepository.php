@@ -19,6 +19,14 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
+     * User List.
+     */
+    public function adminList(): Collection
+    {
+        return User::where('is_admin',1)->latest()->get();
+    }
+
+    /**
      * Create or update user.
      */
     public function storeOrUpdate(array $data, array $roles, $id = null): User

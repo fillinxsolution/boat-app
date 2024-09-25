@@ -32,7 +32,7 @@ class StaffController extends BaseController
     public function index(Request $request): View | JsonResponse
     {
         if ($request->ajax()) {
-            return DataTables::of($this->userRepository->list())
+            return DataTables::of($this->userRepository->adminList())
                 ->addIndexColumn()
                 ->addColumn('name', function ($row) {
                     return $row->name;
@@ -52,12 +52,12 @@ class StaffController extends BaseController
                     return $badges;
                 })
                 ->addColumn('action', function ($row) {
-                    return view('pages.staff.actions', compact('row'));
+                    return view('pages.users.admin.actions', compact('row'));
                 })
                 ->rawColumns(['action', 'image', 'roles'])
                 ->make(true);
         }
-        return view('pages.staff.index');
+        return view('pages.users.admin.index');
     }
 
     /**
@@ -70,7 +70,7 @@ class StaffController extends BaseController
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return view('pages.staff.create', compact('roles'));
+        return view('pages.users.admin.create', compact('roles'));
     }
 
     /**
@@ -80,21 +80,22 @@ class StaffController extends BaseController
     {
         try {
             $request->validate([
-                'first_name'              => 'required',
+                'name'              => 'required',
                 'email'             => 'required|email|unique:users,email',
                 'password'          => 'required|same:confirm_password',
                 'confirm_password'  => 'required|same:password',
                 'roles'             => 'required'
             ]);
 
-            $data = $request->only(['first_name', 'password', 'email']);
-            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'users') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
+            $data = $request->only(['name', 'password', 'email']);
+            $data['is_admin'] = 1 ;
+            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'users/staff') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
             $roles =  array_map('intval', $request->roles);
             $this->userRepository->storeOrUpdate($data, $roles);
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return $this->redirectSuccess(route('staff.index'), 'Staff created successfully.');
+        return $this->redirectSuccess(route('users.staff.index'), 'Staff created successfully.');
     }
 
     /**
@@ -109,7 +110,7 @@ class StaffController extends BaseController
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return view('pages.staff.edit', compact('staff', 'roles', 'staffRole'));
+        return view('pages.users.admin.edit', compact('staff', 'roles', 'staffRole'));
     }
 
     /**
@@ -135,7 +136,7 @@ class StaffController extends BaseController
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return $this->redirectSuccess(route('staff.index'), 'Staff updated successfully.');
+        return $this->redirectSuccess(route('users.staff.index'), 'Staff updated successfully.');
     }
 
     /**
@@ -152,6 +153,6 @@ class StaffController extends BaseController
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return  $this->redirectSuccess(route('users.index'), 'Staff deleted successfully');
+        return  $this->redirectSuccess(route('users.staff.index'), 'Staff deleted successfully');
     }
 }

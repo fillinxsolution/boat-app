@@ -15,11 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 
 /**
- * Staff Routes.
- */
-Route::resource('/staff', StaffController::class)->except('show');
-
-/**
  * Profile Routes.
  */
 Route::controller(ProfileController::class)->group(function () {
@@ -79,6 +74,14 @@ Route::prefix('users')->as('users.')->group(function () {
     Route::patch('captains/change/{id}', 'CaptainController@change')->name('captains.change');
     Route::get('captains/list', 'CaptainController@list')->name('captains.list');
     Route::resource('captains', CaptainController::class);
+
+
+
+    /* ------------------------- Admin  Routes ------------------------ */
+
+    Route::patch('staff/change/{id}', 'StaffController@change')->name('staff.change');
+    Route::get('staff/list', 'StaffController@list')->name('staff.list');
+    Route::resource('staff', StaffController::class);
 
 });
 

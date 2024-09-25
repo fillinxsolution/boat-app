@@ -14,6 +14,10 @@ class Testimonial extends Model
      protected $fillable = ['name','comment','designation','image','is_featured','status','stars'];
 
 
+    public function getImageAttribute($value)
+    {
+        return $value ? '/images/testimonials/'.$value : null;
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

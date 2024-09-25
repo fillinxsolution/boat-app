@@ -37,12 +37,6 @@
                     <x-nav-item route="dashboard" icon="house" title="Dashboards"/>
                 @endcan
 
-{{--                @can('users-list')--}}
-                    <x-nav-item route="users.suppliers.index" active="staff.*" icon="users-three" title="Suppliers"/>
-{{--                @endcan--}}
-
-                <x-nav-item route="users.captains.index" active="staff.*" icon="users-three" title="Captains"/>
-
                 {{--                @canany(['adminRoles-list', 'shopRoles-list'])--}}
                 <x-nav-item active="roles.*" icon="user-focus" title="Roles" :submenu="true">
                     <x-nav-item route="roles.staff.index" active="roles.staff.*" title="Staff"/>
@@ -58,13 +52,17 @@
                 {{--                @canany(['suppliers-list' || 'captains-list'])--}}
                 <x-nav-item active="users.*" icon="users-three" title="Users" :submenu="true">
                     {{--                        @can('suppliers-list')--}}
+                    <x-nav-item route="users.staff.index" active="users.staff.*"
+                                title="Admins"/>
+                    {{--                        @endcan--}}
+
+
                     <x-nav-item route="users.suppliers.index" active="users.suppliers.*"
-                                title="Admin"/>
-                    {{--                        @endcan--}}
-                    {{--                        @can('captains-list')--}}
+                                title="Suppliers"/>
+
                     <x-nav-item route="users.captains.index" active="users.captains.*"
-                                title="Users"/>
-                    {{--                        @endcan--}}
+                                title="Captains"/>
+
                 </x-nav-item>
                 {{--                @endcanany--}}
 
