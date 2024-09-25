@@ -14,13 +14,15 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ServiceCategoryController extends BaseController
 {
-       use UploadTrait;
+    use UploadTrait;
+
     public function __construct(
         private ServiceCategoryRepositoryInterface $serviceCategoryRepository,
-    ) {
+    )
+    {
         $this->middleware('permission:serviceCategory-list', ['only' => ['index', 'show']]);
         $this->middleware('permission:serviceCategory-create', ['only' => ['store']]);
-        $this->middleware('permission:serviceCategory-edit', ['only' => ['edit', 'update','change']]);
+        $this->middleware('permission:serviceCategory-edit', ['only' => ['edit', 'update', 'change']]);
         $this->middleware('permission:serviceCategory-delete', ['only' => ['destroy']]);
     }
 
@@ -56,7 +58,7 @@ class ServiceCategoryController extends BaseController
     {
         $parentCategories = $this->serviceCategoryRepository->activeCategory();
 
-        return view('pages.catalog.services-category.create',compact('parentCategories'));
+        return view('pages.catalog.services-category.create', compact('parentCategories'));
     }
 
     /**
@@ -66,11 +68,27 @@ class ServiceCategoryController extends BaseController
     {
         try {
             $request->validate([
-                'name' => 'required|string|unique:categories,name',
+                'name' => 'required|string',
                 'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
                 'short_description' => 'required',
                 'status' => 'required',
             ]);
+
+            if ($request->parent_id === null) {
+
+                $parentCategories = $this->serviceCategoryRepository->list();
+                $parentNames = $parentCategories->pluck('name');
+                if ($parentNames->contains($request->name)) {
+                    return $this->redirectError('Category Name Already Taken');
+                }
+            }
+            if ($request->parent_id !== null) {
+                $childCategories = $this->serviceCategoryRepository->subCategory($request->parent_id);
+                $childNames = $childCategories->pluck('name');
+                if ($childNames->contains($request->name)) {
+                    return $this->redirectError('Category Name Already Taken');
+                }
+            }
 
             $data = $request->except('image');
             $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'categories') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
@@ -94,9 +112,9 @@ class ServiceCategoryController extends BaseController
      */
     public function edit(string $id): RedirectResponse|View
     {
-            $category = $this->serviceCategoryRepository->findById($id);
-            $categories = $this->serviceCategoryRepository->activeList();
-            return view('pages.catalog.services-category.edit', compact('category','categories'));
+        $category = $this->serviceCategoryRepository->findById($id);
+        $parentCategories = $this->serviceCategoryRepository->activeCategory();
+        return view('pages.catalog.services-category.edit', compact('category', 'parentCategories'));
     }
 
     /**
@@ -106,11 +124,30 @@ class ServiceCategoryController extends BaseController
     {
         try {
             $request->validate([
-                'name' => 'required|string|unique:categories,name,' . $id,
+                'name' => 'required|string',
                 'short_description' => 'required',
                 'status' => 'required'
             ]);
 
+            if ($request->parent_id === null) {
+                // Fetch all parent categories except the current one being updated
+                $parentCategories = $this->serviceCategoryRepository->list()->where('id', '!=', $id);
+                $parentNames = $parentCategories->pluck('name');
+                // Check if the name already exists in the parent categories
+                if ($parentNames->contains($request->name)) {
+                    return $this->redirectError('Category Name Already Taken');
+                }
+            }
+
+            if ($request->parent_id !== null) {
+                // Fetch all child categories of the parent except the current one being updated
+                $childCategories = $this->serviceCategoryRepository->subCategory($request->parent_id)->where('id', '!=', $id);
+                $childNames = $childCategories->pluck('name');
+                // Check if the name already exists in the child categories
+                if ($childNames->contains($request->name)) {
+                    return $this->redirectError('Category Name Already Taken');
+                }
+            }
             $data = $request->except('image');
             if ($request->hasFile('image')) {
                 $data['image'] = $this->uploadFile($request->file('image'), 'categories');
@@ -132,7 +169,7 @@ class ServiceCategoryController extends BaseController
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return  $this->redirectSuccess(route('catalog.category.index'), 'Category deleted successfully');
+        return $this->redirectSuccess(route('catalog.category.index'), 'Category deleted successfully');
     }
 
     public function change(Request $request, string $id)
