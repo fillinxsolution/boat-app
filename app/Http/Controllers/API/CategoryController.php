@@ -64,7 +64,7 @@ class CategoryController extends BaseController
             $result = [
                 'category' => $category,
                 'blogs' =>  $blogs,
-                'services' =>  $services,
+                'services' =>  $services->load('supplier.user'),
             ];
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
