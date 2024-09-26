@@ -43,7 +43,7 @@ class ServiceRepository implements ServiceRepositoryInterface
      */
     public function serviceByCategoryFilter($id): LengthAwarePaginator
     {
-            $services =  Service::with(['images'])->where('category_id',$id)->where('status','Active')->paginate(24);
+            $services =  Service::with(['images','supplier.user'])->where('category_id',$id)->where('status','Active')->paginate(24);
             return $services;
     }
 
@@ -52,7 +52,7 @@ class ServiceRepository implements ServiceRepositoryInterface
      */
     public function limitServices()
     {
-            $services =  Service::with(['images'])->where('status','Active')->limit(8);
+            $services =  Service::with(['images','supplier.user'])->where('status','Active')->limit(8);
             return $services;
     }
 

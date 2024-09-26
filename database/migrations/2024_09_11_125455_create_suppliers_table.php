@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('company_registry')->nullable();
             $table->string('liability_insurance')->nullable();
             $table->enum('status',['Approved','Rejected','Pending'])->default('Pending');
+            $table->boolean('supplier_status')->default(1);
             $table->string('reason')->nullable();
             $table->timestamps();
         });

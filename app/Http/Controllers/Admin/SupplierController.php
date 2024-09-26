@@ -62,37 +62,7 @@ class SupplierController extends BaseController
             ->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
-    {
 
-
-        return view('pages.users.suppliers.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        try {
-            $request->validate([
-                'name' => 'required|string|unique:categories,name',
-                'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
-                'short_description' => 'required',
-                'status' => 'required',
-            ]);
-
-            $data = $request->except('image');
-            $data['image'] = $request->hasFile('image') ? $this->uploadFile($request->file('image'), 'categories') : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg';
-            $this->supplierRepository->storeOrUpdate($data);
-        } catch (\Throwable $th) {
-            return $this->redirectError($th->getMessage());
-        }
-        return $this->redirectSuccess(route('catalog.category.index'), 'Category created successfully.');
-    }
 
     /**
      * Display the specified resource.
@@ -102,51 +72,17 @@ class SupplierController extends BaseController
         $supplier = $this->supplierRepository->supplierDetail($id);
         return view('pages.users.suppliers.show', compact('supplier', ));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id): RedirectResponse|View
-    {
-        $category = $this->supplierRepository->findById($id);
-        $categories = $this->supplierRepository->activeList();
-        return view('pages.catalog.services-category.edit', compact('category','categories'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): RedirectResponse
-    {
-        try {
-            $request->validate([
-                'name' => 'required|string|unique:categories,name,' . $id,
-                'short_description' => 'required',
-                'status' => 'required'
-            ]);
-
-            $data = $request->except('image');
-            if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadFile($request->file('image'), 'categories');
-            }
-            $this->supplierRepository->storeOrUpdate($data, $id);
-        } catch (\Throwable $th) {
-            return $this->redirectError($th->getMessage());
-        }
-        return $this->redirectSuccess(route('catalog.category.index'), 'Category updated successfully.');
-    }
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy($id): RedirectResponse
     {
         try {
             $this->supplierRepository->destroyById($id);
         } catch (\Throwable $th) {
             return $this->redirectError($th->getMessage());
         }
-        return  $this->redirectSuccess(route('catalog.category.index'), 'Category deleted successfully');
+        return  $this->redirectSuccess(route('users.suppliers.index'), 'Supplier deleted successfully');
     }
 
     public function change(Request $request, string $id)
@@ -185,20 +121,18 @@ class SupplierController extends BaseController
         }
         return view('pages.users.suppliers.show', compact('supplier', 'services'));
     }
-    /**
-     * Show documents.
-     */
 
-    public function documents($id)
-    {
+    public function changeStatus(Request $request, string $id){
         try {
-            $supplier = $this->supplierRepository->list($id);
+            $data = [];
+            if ($request->field == 'supplier_status') {
+                $data['supplier_status'] = $request->boolean('supplier_status'); // Use boolean to handle checkbox
+            }
+            $this->supplierRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['msg' => $th->getMessage()]);
         }
-        return view('pages.users.suppliers.show', compact('supplier'));
+        return $this->redirectSuccess(route('users.suppliers.index'), 'Supplier Status changed successfully.');
     }
-
-
 
 }
