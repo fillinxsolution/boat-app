@@ -98,4 +98,17 @@ class SupplierController extends BaseController
     }
 
 
+    public function companyProfile($id)
+    {
+        try {
+            $supplier = $this->supplierRepository->list($id);
+            $supplier = $supplier->supplier->load('user','services','services.images','portfolio','portfolio.images');
+
+        } catch (\Throwable $th) {
+            return $this->sendException([$th->getMessage()]);
+        }
+        return $this->sendResponse($supplier, 'Data Get SuccessFully', 200);
+    }
+
+
 }

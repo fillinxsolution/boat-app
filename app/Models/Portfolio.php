@@ -12,12 +12,18 @@ class Portfolio extends Model
     protected $table = 'portfolio';
 
 
+
    protected $fillable = ['supplier_id','category_id','title','yacht_name','location','description','captain_name','captain_email','status'];
 
 
     public function images()
     {
         return $this->hasMany(PortfolioImage::class);
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class,'supplier_id');
     }
 
     /**

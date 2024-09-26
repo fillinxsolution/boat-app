@@ -56,5 +56,11 @@ class Supplier extends Model
         return $this->hasMany(Service::class);
     }
 
+    public function portfolio()
+    {
+        return $this->hasMany(Portfolio::class,'supplier_id');
+    }
+
+
 
 }
