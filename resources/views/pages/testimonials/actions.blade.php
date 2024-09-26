@@ -1,5 +1,5 @@
 <x-actions
-    :editRoute="route('catalog.category.edit', $row->id)" canEdit="serviceCategory-edit"
-    :deleteRoute="route('catalog.category.destroy', $row->id)" canDelete="serviceCategory-delete"
+    :editRoute="route('pages.testimonials.edit', $row->id)"
+    :deleteRoute="route('pages.testimonials.destroy', $row->id)"
 >
 </x-actions>

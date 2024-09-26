@@ -45,13 +45,6 @@
 
 
 
-                        <li class="nav-item" role="presentation">
-                            <a href="{{ route('users.suppliers.documents', $supplier->id) }}"
-                                class="nav-link {{ Route::is('users.suppliers.documents') ? 'active' : '' }}">
-                                <i class="ph-cube me-2"></i>
-                               Documents Approval
-                            </a>
-                        </li>
 
 {{--                        <li class="nav-item" role="presentation">--}}
 {{--                            <a href="{{ route('shops.orders', $shop->id) }}"--}}
@@ -70,8 +63,6 @@
                 <!-- Right content -->
                 @if (Route::is('users.suppliers.services', $supplier->id))
                     @include('pages.users.suppliers.details.services')
-                @elseif (Route::is('users.suppliers.documents', $supplier->id))
-                    @include('pages.users.suppliers.details.documents')
 {{--                @elseif (Route::is('shops.orders', $supplier->id))--}}
 {{--                    @include('pages.shop.details.orders')--}}
                 @else
