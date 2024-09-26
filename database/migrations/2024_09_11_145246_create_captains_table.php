@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string('vat_number')->nullable();
             $table->string('sector')->nullable();
             $table->text('description')->nullable();
-            $table->string('company_registry')->nullable();
-            $table->string('liability_insurance')->nullable();
+            $table->string('insurance')->nullable();
+            $table->string('boat_registration_papers')->nullable();
             $table->enum('status',['Approved','Rejected','Pending'])->default('Pending');
+            $table->enum('captain_status',['Active','DeActive'])->default('Active');
             $table->string('reason')->nullable();
             $table->timestamps();
         });

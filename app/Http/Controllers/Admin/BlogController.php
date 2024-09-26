@@ -136,8 +136,10 @@ class BlogController extends BaseController
     {
         try {
             $data = [];
+
             if ($request->field == 'status') {
-                $data['status'] = $request->boolean('status'); // Use boolean to handle checkbox
+
+                $data['status'] = ($request->boolean('status')) == true ? 'Active'  : 'DeActive';
             }
             $this->blogRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {

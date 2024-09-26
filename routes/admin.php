@@ -63,6 +63,7 @@ Route::prefix('users')->as('users.')->group(function () {
 
     Route::controller(SupplierController::class)->prefix('suppliers')->as('suppliers.')->group(function () {
         Route::post('suppliers/change/{id}', 'change')->name('change');
+        Route::post('suppliers/changeStatus/{id}', 'changeStatus')->name('changeStatus');
         Route::get('suppliers/list', 'list')->name('list');
         Route::get('/{id}/info', 'info')->name('info');
         Route::get('/{id}/services', 'services')->name('services');
