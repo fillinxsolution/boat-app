@@ -46,6 +46,10 @@ Route::get('home', [HomeController::class,'index']);
 
 Route::get('serviceCategory/{id}', [ServiceController::class,'serviceCategory']);
 
+/* ------------------------- Company Profile  Routes ------------------------ */
+
+Route::get('companyProfile/{id}', [SupplierController::class,'companyProfile']);
+
 
 /* ------------------------- Blogs  Routes ------------------------ */
 
