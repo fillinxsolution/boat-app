@@ -158,7 +158,7 @@ class SupplierController extends BaseController
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['msg' => $th->getMessage()]);
         }
-        return $this->redirectSuccess(route('users.suppliers.documents', $id), 'Supplier Status Changed successfully.');
+        return $this->redirectSuccess(route('users.suppliers.show', $id), 'Supplier Status Changed successfully.');
     }
 
     /**

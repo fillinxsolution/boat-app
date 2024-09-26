@@ -66,7 +66,6 @@ Route::prefix('users')->as('users.')->group(function () {
         Route::get('suppliers/list', 'list')->name('list');
         Route::get('/{id}/info', 'info')->name('info');
         Route::get('/{id}/services', 'services')->name('services');
-        Route::get('/{id}/documents', 'documents')->name('documents');
     });
 
     /* ------------------------- Captains  Routes ------------------------ */

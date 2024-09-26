@@ -207,6 +207,7 @@ class ServiceController extends BaseController
                 'blogs' =>  $blogs,
                 'services' =>  $services,
                 'popularServices' =>  $popularServices,
+                'user' => $services->load('supplier.user')
             ];
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);

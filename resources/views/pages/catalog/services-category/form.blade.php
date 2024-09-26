@@ -6,14 +6,23 @@
 
             <x-input name="name" :value="$category->name ?? null" :required="true" />
 
-            <x-input col="6" title="Category" name="parent_id" type="select" >
-                @foreach ($parentCategories as $cat)
-                    <option value="{{ $cat->id }}"
-                        {{ isset($category) && $cat->id == $category->parent_id ? 'selected' : '' }}>
-                        {{ $cat->name }}
-                    </option>
-                @endforeach
-            </x-input>
+
+            <div>
+                <input type="checkbox" id="showInputCheckbox" onchange="toggleInput()"
+                    {{ isset($category) && $category->parent_id ? 'checked' : '' }} />
+                <label for="showInputCheckbox">Select Parent Category</label>
+            </div>
+
+            <div id="categoryInput" style="display: {{ isset($category) && $category->parent_id ? 'block' : 'none' }};">
+                <x-input col="6" title="Category" name="parent_id" type="select">
+                    @foreach ($parentCategories as $cat)
+                        <option value="{{ $cat->id }}" {{ isset($category) && $cat->id == $category->parent_id ? 'selected' : '' }}>
+                            {{ $cat->name }}
+                        </option>
+                    @endforeach
+                </x-input>
+            </div>
+
 
             <x-input col="6" name="status" type="select" :required="true">
                 <option value="1" @selected(isset($category->status) && $category->status == 1)>Active</option>
@@ -38,5 +47,22 @@
     </div>
 
 </div>
+
+@push('scripts')
+    <script>
+        function toggleInput() {
+            var checkbox = document.getElementById('showInputCheckbox');
+            var inputDiv = document.getElementById('categoryInput');
+
+            // Toggle visibility based on checkbox state
+            if (checkbox.checked) {
+                inputDiv.style.display = 'block';
+            } else {
+                inputDiv.style.display = 'none';
+            }
+        }
+
+    </script>
+@endpush
 
 
