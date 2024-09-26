@@ -13,8 +13,8 @@
                         <i class="ph-currency-dollar ph-2x text-success me-3"></i>
 
                         <div class="flex-fill text-end">
-                            <h4 class="mb-0">{{ $stats['total_subscriptions'] ?? 0 }}</h4>
-                            <span class="text-muted">Total Subscriptions</span>
+                            <h4 class="mb-0">{{ $stats['suppliers'] ?? 0 }}</h4>
+                            <span class="text-muted">Total Suppliers</span>
                         </div>
                     </div>
                 </div>
@@ -26,8 +26,8 @@
                         <i class="ph-trend-down ph-2x text-danger me-3"></i>
 
                         <div class="flex-fill text-end">
-                            <h4 class="mb-0">{{ $stats['subpscription_left'] ?? 0 }}</h4>
-                            <span class="text-muted">Left Subscriptions</span>
+                            <h4 class="mb-0">{{ $stats['captains'] ?? 0 }}</h4>
+                            <span class="text-muted">Total Captains</span>
                         </div>
 
                     </div>
@@ -40,8 +40,8 @@
                         <i class="ph-trend-up ph-2x text-primary me-3"></i>
 
                         <div class="flex-fill text-end">
-                            <h4 class="mb-0">{{ $stats['current_month_sub'] ?? 0 }}</h4>
-                            <span class="text-muted">Current Month Subscriptions</span>
+                            <h4 class="mb-0">{{ $stats['users'] ?? 0 }}</h4>
+                            <span class="text-muted">Total Users</span>
                         </div>
 
                     </div>
