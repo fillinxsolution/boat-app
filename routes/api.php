@@ -62,6 +62,10 @@ Route::get('blog/is-popular', [BlogController::class,'isPopular']);
 Route::apiResource('testimonials', TestimonialController::class);
 Route::get('testimonial/is-popular', [TestimonialController::class,'isPopular']);
 
+/* ------------------------- Service By ID  Routes ------------------------ */
+
+Route::get('services/{id}', [ServiceController::class,'show']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -76,7 +80,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     /* ------------------------- service  Routes ------------------------ */
 
-    Route::apiResource('services', ServiceController::class);
+    Route::apiResource('services', ServiceController::class)->except('show');
     Route::get('service/active', [ServiceController::class,'activeList']);
     Route::post('service/upload-image', [ServiceController::class,'uploadImage']);
     Route::post('service/delete-image/{id}', [ServiceController::class,'deleteImage']);

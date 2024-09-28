@@ -36,28 +36,6 @@ class ServiceCategoryController extends BaseController
     }
 
     /**
-     * Display a listing of the resource.
-     */
-//    public function list(): JsonResponse
-//    {
-//        $data = $this->serviceCategoryRepository->parentCategory();
-//        return DataTables::of($data)
-//            ->addIndexColumn()
-//            ->addColumn('action', function ($row) {
-//                return view('pages.catalog.services-category.actions', compact('row'));
-//            })
-//            ->editColumn('status', function ($row) {
-//                return view('pages.catalog.services-category.status', compact('row'));
-//            })
-//            ->addColumn('children', function ($row) {
-//                return $row->children ? $this->renderCategoryTree($row->children) : '';
-//            })
-//            ->rawColumns(['action', 'status', 'children'])
-//            ->make(true);
-//    }
-
-
-    /**
      * Show the form for creating a new resource.
      */
     public function create(): View
