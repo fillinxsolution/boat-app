@@ -52,7 +52,7 @@ class ServiceRepository implements ServiceRepositoryInterface
      */
     public function limitServices()
     {
-            $services =  Service::with(['images','supplier.user'])->where('status','Active')->limit(8);
+            $services =  Service::with(['images','supplier.user'])->where('status','Active')->limit(8)->get();
             return $services;
     }
 

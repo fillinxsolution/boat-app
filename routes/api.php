@@ -34,7 +34,7 @@ Route::post('/social-login', [AuthController::class, 'socialLogin']);
 /* ------------------------- Categories  Routes ------------------------ */
 
 Route::apiResource('categories', CategoryController::class);
-Route::get('sub-categories/{id}', [CategoryController::class,'subCategory']);
+Route::get('category-page/{id}', [CategoryController::class,'subCategory']);
 Route::get('category/is-popular', [CategoryController::class,'isPopular']);
 
 /* ------------------------- Home Page  Routes ------------------------ */
@@ -44,7 +44,7 @@ Route::get('home', [HomeController::class,'index']);
 
 /* ------------------------- Category By Services  Routes ------------------------ */
 
-Route::get('serviceCategory/{id}', [ServiceController::class,'serviceCategory']);
+Route::get('sub-category-page/{id}', [ServiceController::class,'subCategoryPage']);
 
 /* ------------------------- Company Profile  Routes ------------------------ */
 
