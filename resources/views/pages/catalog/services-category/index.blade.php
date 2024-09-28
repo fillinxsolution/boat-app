@@ -2,13 +2,13 @@
 
     <x-breadcrumb title="Service Category">
         @can('serviceCategory-create')
-        <a href="{{ route('catalog.category.create') }}"
-           class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('catalog.category.create') }}"
+               class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
             <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                 <i class="ph-plus"></i>
             </span>
-            Create New
-        </a>
+                Create New
+            </a>
         @endcan
     </x-breadcrumb>
 
@@ -18,14 +18,21 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">List</h5>
+                        <h5 class="mb-0">Parent Category</h5>
                     </div>
-                    <x-datatable :url="route('catalog.category.list')" :index="['DT_RowIndex', 'name', 'status', 'action']">
-                        <th>No</th>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </x-datatable>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <x-category-tree :categories="$categories" :level="1" />
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

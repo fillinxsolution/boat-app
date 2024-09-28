@@ -18,6 +18,14 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
         return Category::latest()->get();
     }
 
+    /**
+     * All  category list.
+     */
+    public function parentCategory(): Collection
+    {
+        return Category::with(['children'])->where('parent_id','=',null)->latest()->get();
+    }
+
      /**
      * Active  category list.
      */
@@ -67,7 +75,7 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
      */
     public function nestedCategory($id): Category
     {
-        return  Category::with(['children','children.children'])->find($id);
+        return  Category::with(['children','children.children'])->findOrFail($id);
     }
 
 

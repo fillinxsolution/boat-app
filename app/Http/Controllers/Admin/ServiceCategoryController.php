@@ -31,25 +31,31 @@ class ServiceCategoryController extends BaseController
      */
     public function index()
     {
-        return view('pages.catalog.services-category.index');
+        $categories = $this->serviceCategoryRepository->parentCategory();
+        return view('pages.catalog.services-category.index',compact('categories'));
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function list(): JsonResponse
-    {
-        $data = $this->serviceCategoryRepository->list();
-        return DataTables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                return view('pages.catalog.services-category.actions', compact('row'));
-            })->editColumn('status', function ($row) {
-                return view('pages.catalog.services-category.status', compact('row'));
-            })
-            ->rawColumns(['action', 'status'])
-            ->make(true);
-    }
+//    public function list(): JsonResponse
+//    {
+//        $data = $this->serviceCategoryRepository->parentCategory();
+//        return DataTables::of($data)
+//            ->addIndexColumn()
+//            ->addColumn('action', function ($row) {
+//                return view('pages.catalog.services-category.actions', compact('row'));
+//            })
+//            ->editColumn('status', function ($row) {
+//                return view('pages.catalog.services-category.status', compact('row'));
+//            })
+//            ->addColumn('children', function ($row) {
+//                return $row->children ? $this->renderCategoryTree($row->children) : '';
+//            })
+//            ->rawColumns(['action', 'status', 'children'])
+//            ->make(true);
+//    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -99,13 +105,16 @@ class ServiceCategoryController extends BaseController
         return $this->redirectSuccess(route('catalog.category.index'), 'Category created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+//    /**
+//     * Display the specified resource.
+//     */
+//    public function show($id)
+//    {
+////        $childCategory = $this->serviceCategoryRepository->nestedCategory($id);
+//        $catId = $id;
+//        return view('pages.catalog.services-category.child-category.index', compact('catId'));
+//    }
+
 
     /**
      * Show the form for editing the specified resource.
