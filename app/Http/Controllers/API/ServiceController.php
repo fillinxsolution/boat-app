@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\BlogRepositoryInterface;
 use App\Interfaces\ServiceCategoryRepositoryInterface;
 use App\Interfaces\ServiceRepositoryInterface;
+use App\Models\Service;
 use App\Models\ServiceFaq;
 use App\Models\ServiceImage;
 use App\Models\ServiceTag;
@@ -161,6 +162,23 @@ class ServiceController extends BaseController
 
     }
 
+
+    public function show($id){
+        try {
+            $service =  $this->serviceRepository->findById($id);
+            $relatedServices = Service::with(['images','supplier.user'])->where('supplier_id',$service->supplier_id)->get();
+            $popularServices =  $this->serviceRepository->limitServices();
+            $result = [
+                'service' =>  $service?->load('images','supplier.user'),
+                'relatedServices' =>  $relatedServices,
+                'popularServices' =>  $popularServices,
+            ];
+        } catch (\Throwable $th) {
+            return $this->sendException([$th->getMessage()]);
+        }
+        return $this->sendResponse($result, 'Data Get SuccessFully', 200);
+    }
+
     public function uploadImage(Request $request)
     {
         try {
@@ -196,7 +214,7 @@ class ServiceController extends BaseController
     }
 
 
-    public function serviceCategory($id){
+    public function subCategoryPage($id){
         try {
             $category = $this->serviceCategoryRepository->findById($id);
             $blogs =  $this->blogRepository->activeList();
