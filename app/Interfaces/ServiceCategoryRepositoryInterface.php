@@ -8,6 +8,8 @@ interface ServiceCategoryRepositoryInterface
 
     public function activeList();
 
+    public function parentCategory();
+
     public function activeCategory();
 
     public function isPopular();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\BaseController;
 use App\Interfaces\SupplierRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,13 @@ class SupplierController extends BaseController
 
     public function __construct(
         private SupplierRepositoryInterface $supplierRepository,
+        private UserRepositoryInterface $userRepository,
 
     )
     {
 
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -46,7 +49,7 @@ class SupplierController extends BaseController
                 'company_registry' => 'mimes:pdf|max:2048',
             ]);
 
-            $data = $request->except(['banner_image','liability_insurance','company_registry']);
+            $data = $request->except(['banner_image', 'liability_insurance', 'company_registry']);
             if ($request->hasFile('banner_image')) {
                 $data['image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImage');
             }
@@ -57,16 +60,16 @@ class SupplierController extends BaseController
             if ($request->hasFile('company_registry')) {
                 $data['company_registry'] = $this->uploadDocuments($request->file('company_registry'), 'supplier/documents/companyRegistry');
             }
-            $data['user_id'] =  auth()->user()->id;
+            $data['user_id'] = auth()->user()->id;
             $this->supplierRepository->storeOrUpdate($data);
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
-        return $this->sendResponse(null,'Supplier Documents Upload SuccessFully',200);
+        return $this->sendResponse(null, 'Supplier Documents Upload SuccessFully', 200);
     }
 
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
             $request->validate([
@@ -78,7 +81,7 @@ class SupplierController extends BaseController
                 'company_registry' => 'mimes:pdf|max:2048',
             ]);
 
-            $data = $request->except(['banner_image','liability_insurance','company_registry']);
+            $data = $request->except(['banner_image', 'liability_insurance', 'company_registry']);
             if ($request->hasFile('banner_image')) {
                 $data['banner_image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImages');
             }
@@ -89,12 +92,12 @@ class SupplierController extends BaseController
             if ($request->hasFile('company_registry')) {
                 $data['company_registry'] = $this->uploadDocuments($request->file('company_registry'), 'supplier/documents/companyRegistry');
             }
-            $data['user_id'] =  auth()->user()->id;
+            $data['user_id'] = auth()->user()->id;
             $this->supplierRepository->storeOrUpdate($data, $id);
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
-        return $this->sendResponse($data,'Supplier Documents Update SuccessFully',200);
+        return $this->sendResponse($data, 'Supplier Documents Update SuccessFully', 200);
     }
 
 
@@ -102,12 +105,37 @@ class SupplierController extends BaseController
     {
         try {
             $supplier = $this->supplierRepository->list($id);
-            $supplier = $supplier->supplier->load('user','services','services.images','portfolio','portfolio.images');
+            $supplier = $supplier->supplier->load('user', 'services', 'services.images', 'portfolio', 'portfolio.images');
 
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
         return $this->sendResponse($supplier, 'Data Get SuccessFully', 200);
+    }
+
+    public function supplierImageUpdate(Request $request)
+    {
+
+        try {
+            if ($request->supplier_id) {
+                if ($request->hasFile('banner_image')) {
+                    $data['banner_image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImages');
+                }
+                $this->supplierRepository->storeOrUpdate($data, $request->supplier_id);
+            }
+            if ($request->user_id) {
+                if ($request->hasFile('image')) {
+                    $data['image'] = $this->uploadFile($request->file('image'), 'users/staff');
+                }
+                $this->userRepository->updateApiUser($data, $request->user_id);
+            }
+
+        } catch (\Throwable $th) {
+            return $this->sendException([$th->getMessage()]);
+        }
+        return $this->sendResponse(null, 'Supplier Image Update SuccessFully', 200);
+
+
     }
 
 

@@ -70,7 +70,7 @@ class SupplierController extends BaseController
     public function show(Request $request, string $id): RedirectResponse | View
     {
         $supplier = $this->supplierRepository->supplierDetail($id);
-        return view('pages.users.suppliers.show', compact('supplier', ));
+        return view('pages.users.suppliers.show', compact('supplier'));
     }
     /**
      * Remove the specified resource from storage.

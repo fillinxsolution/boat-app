@@ -72,6 +72,7 @@ Route::middleware('auth:sanctum')->group(function () {
     /* ------------------------- Supplier Routes ------------------------ */
 
     Route::apiResource('suppliers', SupplierController::class);
+    Route::post('supplierImageUpdate', [SupplierController::class,'supplierImageUpdate']);
 
     /* ------------------------- service  Routes ------------------------ */
 
