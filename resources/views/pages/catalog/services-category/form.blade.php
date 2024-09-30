@@ -15,11 +15,9 @@
 
             <div id="categoryInput" style="display: {{ isset($category) && $category->parent_id ? 'block' : 'none' }};">
                 <x-input col="6" title="Category" name="parent_id" type="select">
-                    @foreach ($parentCategories as $cat)
-                        <option value="{{ $cat->id }}" {{ isset($category) && $cat->id == $category->parent_id ? 'selected' : '' }}>
-                            {{ $cat->name }}
-                        </option>
-                    @endforeach
+
+                    {{ displayCategories($parentCategories, isset($category) ? $category->parent_id : null) }}
+
                 </x-input>
             </div>
 
