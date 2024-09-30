@@ -43,7 +43,8 @@ class ServiceRepository implements ServiceRepositoryInterface
      */
     public function serviceByCategoryFilter($id): LengthAwarePaginator
     {
-            $services =  Service::with(['images','supplier.user'])->where('category_id',$id)->where('status','Active')->paginate(24);
+             $perPage = request()->get('per_page', 24);
+            $services =  Service::with(['images','supplier.user'])->where('category_id',$id)->where('status','Active')->paginate($perPage);
             return $services;
     }
 
