@@ -25,10 +25,16 @@ class SupplierRepository implements SupplierRepositoryInterface
      */
     public function lists()
     {
-        $supplier = User::has('supplier')
+        $perPage = request()->get('per_page', 10);
+        $supplier = User::whereHas('supplier', function($query) {
+            $query->where('status', 'Approved');
+        })
             ->with('supplier')
+            ->where('is_active', 'Active')
+            ->where('is_admin', 0)
             ->inRandomOrder()
-            ->get();
+            ->paginate($perPage);
+
         return $supplier;
     }
 
