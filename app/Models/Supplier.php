@@ -13,7 +13,7 @@ class Supplier extends Model
 
     protected $fillable = [
         'user_id','banner_image','company_name','director_name','address',
-        'vat_number','sector','description','company_registry','liability_insurance','status','reason'
+        'vat_number','sector','description','company_registry','liability_insurance','status','reason','supplier_status'
     ];
 
 

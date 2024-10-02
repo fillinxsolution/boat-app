@@ -16,7 +16,19 @@ class SupplierRepository implements SupplierRepositoryInterface
      */
     public function list($id)
     {
-        $supplier =  User::with('supplier')->find($id);
+        $supplier = User::with('supplier')->find($id);
+        return $supplier;
+    }
+
+    /**
+     * Login User list.
+     */
+    public function lists()
+    {
+        $supplier = User::has('supplier')
+            ->with('supplier')
+            ->inRandomOrder()
+            ->get();
         return $supplier;
     }
 
@@ -24,9 +36,9 @@ class SupplierRepository implements SupplierRepositoryInterface
     /**
      *  list.
      */
-    public function webList() :Collection
+    public function webList(): Collection
     {
-        $suppliers =  User::has('supplier')->with('supplier')->where('is_admin',0)->get();
+        $suppliers = User::has('supplier')->with('supplier')->where('is_admin', 0)->get();
         return $suppliers;
     }
 
@@ -58,6 +70,7 @@ class SupplierRepository implements SupplierRepositoryInterface
     {
         return Supplier::find($id);
     }
+
     /**
      * Delete Supplier by id.
      */
