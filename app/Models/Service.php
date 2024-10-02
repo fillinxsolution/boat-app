@@ -13,6 +13,12 @@ class Service extends Model
     protected $fillable = ['category_id','supplier_id','name','description','status'];
 
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+
     public function category(){
         return $this->belongsTo(Category::class,'category_id');
     }

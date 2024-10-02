@@ -17,11 +17,6 @@ class HomeController extends BaseController
     public function index()
     {
         try {
-//            $categories =  Category::where('parent_id','=',null)->where('status', 1)->get();
-//            $services =  Service::with(['images'])->where('status','Active')->get();
-//            $testimonials = Testimonial::where('status','Active')->get();
-//            $blogs = Blog::where('status','Active')->get();
-//            $videoLink = adminSettings('home_video_link');
             $result = [
                 'categories' => Category::where('parent_id', '=', null)->where('status', 1)->get(),
                 'services' => Service::with(['images'])->where('status', 'Active')->get(),

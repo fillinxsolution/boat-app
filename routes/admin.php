@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\CaptainController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -76,7 +77,6 @@ Route::prefix('users')->as('users.')->group(function () {
     Route::resource('captains', CaptainController::class);
 
 
-
     /* ------------------------- Admin  Routes ------------------------ */
 
     Route::patch('staff/change/{id}', 'StaffController@change')->name('staff.change');
@@ -95,6 +95,11 @@ Route::prefix('settings')->as('settings.')->group(function () {
     });
 });
 
+/**
+ * Services Routes.
+ */
+  Route::resource('services', ServiceController::class);
+
 
 /**
  * Pages Routes.
@@ -110,7 +115,4 @@ Route::prefix('pages')->as('pages.')->group(function () {
     Route::patch('testimonials/change/{id}', 'TestimonialController@change')->name('testimonials.change');
     Route::get('testimonials/list', 'TestimonialController@list')->name('testimonials.list');
     Route::resource('testimonials', TestimonialController::class);
-
-
-
 });
