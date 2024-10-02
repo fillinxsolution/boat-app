@@ -110,10 +110,19 @@ class SupplierController extends BaseController
 
                 return DataTables::of($services)
                     ->addIndexColumn()
+                    ->editColumn('name', function ($row) {
+                        $link = route('services.show', $row->id);
+//                if (auth()->user()->can('services-view')) {
+                        $url =  "<a href='{$link}'>{$row->name}</a>";
+//                } else {
+//                    $url =  "<p>{$row->name}</p>";
+//                }
+                        return $url;
+                    })
                     ->editColumn('status', function ($row) {
                         return $this->statusBadge($row->status);
                     })
-                    ->rawColumns(['status'])
+                    ->rawColumns(['status','name'])
                     ->make(true);
             }
         } catch (\Throwable $th) {

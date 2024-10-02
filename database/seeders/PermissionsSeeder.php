@@ -253,6 +253,36 @@ class PermissionsSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
 
+             /* ---------------------------------- services Permission --------------------------------- */
+            [
+                'name' => 'services-list',
+                'display_name' => 'services List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'services-create',
+                'display_name' => 'services Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'services-edit',
+                'display_name' => 'services Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'services-delete',
+                'display_name' => 'services Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
 
         ]);
     }
