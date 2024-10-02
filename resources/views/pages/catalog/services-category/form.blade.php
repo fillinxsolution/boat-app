@@ -6,7 +6,6 @@
 
             <x-input name="name" :value="$category->name ?? null" :required="true" />
 
-
             <div>
                 <input type="checkbox" id="showInputCheckbox" onchange="toggleInput()"
                     {{ isset($category) && $category->parent_id ? 'checked' : '' }} />
@@ -21,7 +20,6 @@
                 </x-input>
             </div>
 
-
             <x-input col="6" name="status" type="select" :required="true">
                 <option value="1" @selected(isset($category->status) && $category->status == 1)>Active</option>
                 <option value="0" @selected(isset($category->status) && $category->status == 0)>InActive</option>
@@ -32,15 +30,13 @@
                 <option value="No" @selected(isset($category->is_popular) && $category->is_popular == 'No')>No</option>
             </x-input>
 
-
-
-            <x-input type="textarea" name="short_description" :value="$category->short_description ?? null" />
+            <x-input type="textarea" name="short_description" :value="$category->short_description ?? null"  />
 
         </div>
     </div>
     <div class="col-md-4">
         <div class="row">
-            <x-input name="image" type="dropify" :defaultFile="$category->image ?? null" dropifyHeight="202" />
+            <x-input name="image" type="dropify" :defaultFile="$category->image ?? null" dropifyHeight="202" :required="true" />
         </div>
     </div>
 

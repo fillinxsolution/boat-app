@@ -6,6 +6,8 @@ interface SupplierRepositoryInterface
 {
     public function list($id);
 
+    public function lists();
+
     public function storeOrUpdate(array $data, $id = null);
 
     public function findById($id);
