@@ -13,7 +13,6 @@ class ProfessionalController extends BaseController
 {
     //professional
     public function __construct(
-        private SupplierRepositoryInterface $supplierRepository,
         private ServiceRepositoryInterface $serviceRepository,
         private BlogRepositoryInterface $blogRepository,
 
@@ -23,11 +22,11 @@ class ProfessionalController extends BaseController
     }
     public function index(){
         try {
-            $supplier = $this->supplierRepository->lists();
+            $services =  $this->serviceRepository->servicesList();
             $blogs =  $this->blogRepository->activeList();
             $popularServices =  $this->serviceRepository->limitServices();
             $result = [
-                'suppliers' =>  $supplier,
+                'services' =>  $services,
                 'blogs' =>  $blogs,
                 'popularServices' =>  $popularServices,
             ];

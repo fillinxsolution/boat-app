@@ -11,6 +11,8 @@ interface ServiceRepositoryInterface
 
     public function serviceByCategoryFilter($id);
 
+    public function servicesList();
+
     public function limitServices();
 
     public function activeList($id);
