@@ -273,6 +273,36 @@ class PermissionsSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
 
+            /* ---------------------------------- Plans --------------------------------- */
+            [
+                'name' => 'plans-list',
+                'display_name' => 'Plan List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'plans-create',
+                'display_name' => 'Plan Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'plans-edit',
+                'display_name' => 'Plan Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'plans-delete',
+                'display_name' => 'Plan Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
 
         ]);
     }

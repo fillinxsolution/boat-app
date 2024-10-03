@@ -10,6 +10,7 @@ use App\Http\Controllers\API\HomeController;
 use App\Http\Controllers\API\BlogController;
 use App\Http\Controllers\API\TestimonialController;
 use App\Http\Controllers\API\ProfessionalController;
+use App\Http\Controllers\API\PlanController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -61,6 +62,10 @@ Route::get('blog/is-popular', [BlogController::class,'isPopular']);
 /* ------------------------- our professional   Routes ------------------------ */
 
 Route::apiResource('professionals', ProfessionalController::class);
+
+/* ------------------------- Plans   Routes ------------------------ */
+
+Route::apiResource('plans', PlanController::class);
 
 
 

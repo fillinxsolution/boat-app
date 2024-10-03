@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\{PermissionRepositoryInterface,
+    PlanRepositoryInterface,
     PortfolioRepositoryInterface,
     RoleRepositoryInterface,
     ServiceCategoryRepositoryInterface,
@@ -14,6 +15,7 @@ use App\Interfaces\{PermissionRepositoryInterface,
     UserRepositoryInterface};
 
 use App\Repositories\{PermissionRepository,
+    PlanRepository,
     PortfolioRepository,
     RoleRepository,
     ServiceCategoryRepository,
@@ -39,6 +41,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PortfolioRepositoryInterface::class, PortfolioRepository::class);
         $this->app->bind(BlogRepositoryInterface::class, BlogRepository::class);
         $this->app->bind(TestimonialRepositoryInterface::class, TestimonialRepository::class);
+        $this->app->bind(PlanRepositoryInterface::class, PlanRepository::class);
 
     }
 

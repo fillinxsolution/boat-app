@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CaptainController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\PlanController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -99,6 +100,14 @@ Route::prefix('settings')->as('settings.')->group(function () {
  * Services Routes.
  */
   Route::resource('services', ServiceController::class);
+
+
+/**
+ * Plan Routes.
+ */
+Route::patch('plans/change/{id}', 'PlanController@change')->name('plans.change');
+Route::get('plans/list', 'PlanController@list')->name('plans.list');
+Route::resource('plans', PlanController::class)->except('show');
 
 
 /**

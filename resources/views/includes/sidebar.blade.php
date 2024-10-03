@@ -49,6 +49,10 @@
 
                 </x-nav-item>
 
+{{--                @can('plans-list')--}}
+                    <x-nav-item route="plans.index" active="plans.*" icon="clipboard-text" title="Plans" />
+{{--                @endcan--}}
+
                 {{--                @canany(['suppliers-list' || 'captains-list'])--}}
                 <x-nav-item active="users.*" icon="users-three" title="Users" :submenu="true">
                     {{--                        @can('suppliers-list')--}}
