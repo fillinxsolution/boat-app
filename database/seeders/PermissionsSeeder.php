@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Permission;
 
 class PermissionsSeeder extends Seeder
 {
@@ -184,45 +183,6 @@ class PermissionsSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
 
-            /* ---------------------------------- Supplier Permission --------------------------------- */
-            [
-                'name' => 'suppliers-list',
-                'display_name' => 'suppliers List',
-                'guard_name' => 'web',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'name' => 'suppliers-create',
-                'display_name' => 'suppliers Create',
-                'guard_name' => 'web',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'name' => 'suppliers-edit',
-                'display_name' => 'suppliers Edit',
-                'guard_name' => 'web',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'name' => 'suppliers-delete',
-                'display_name' => 'suppliers Delete',
-                'guard_name' => 'web',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-
-            [
-                'name' => 'supplier-view',
-                'display_name' => 'supplier view',
-                'guard_name' => 'web',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-
-
             /* ---------------------------------- Captains Permission --------------------------------- */
             [
                 'name' => 'captains-list',
@@ -278,6 +238,36 @@ class PermissionsSeeder extends Seeder
             [
                 'name' => 'services-delete',
                 'display_name' => 'services Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+            /* ---------------------------------- supplier Permission --------------------------------- */
+            [
+                'name' => 'supplier-list',
+                'display_name' => 'supplier List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'supplier-create',
+                'display_name' => 'supplier Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'supplier-edit',
+                'display_name' => 'supplier Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'supplier-delete',
+                'display_name' => 'supplier Delete',
                 'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

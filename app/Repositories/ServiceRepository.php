@@ -51,6 +51,16 @@ class ServiceRepository implements ServiceRepositoryInterface
     /**
      * Active list.
      */
+    public function servicesList(): LengthAwarePaginator
+    {
+             $perPage = request()->get('per_page', 10);
+            $services =  Service::with(['images','supplier.user'])->where('status','Active')->paginate($perPage);
+            return $services;
+    }
+
+    /**
+     * Active list.
+     */
     public function limitServices()
     {
             $services =  Service::with(['images','supplier.user'])->where('status','Active')->limit(8)->get();
