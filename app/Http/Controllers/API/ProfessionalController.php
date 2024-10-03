@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Controller;
 use App\Interfaces\BlogRepositoryInterface;
 use App\Interfaces\ServiceRepositoryInterface;
-use App\Interfaces\SupplierRepositoryInterface;
-use Illuminate\Http\Request;
+
 
 class ProfessionalController extends BaseController
 {
-    //professional
+
     public function __construct(
         private ServiceRepositoryInterface $serviceRepository,
         private BlogRepositoryInterface $blogRepository,
