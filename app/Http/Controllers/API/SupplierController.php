@@ -15,13 +15,11 @@ class SupplierController extends BaseController
     public function __construct(
         private SupplierRepositoryInterface $supplierRepository,
         private UserRepositoryInterface $userRepository,
-
-    )
+      )
     {
 
     }
-
-    /**
+        /**
      * Display a listing of the resource.
      */
     public function index()
@@ -105,7 +103,7 @@ class SupplierController extends BaseController
     {
         try {
             $supplier = $this->supplierRepository->list($id);
-            $supplier = $supplier->supplier->load('user', 'services', 'services.images', 'portfolio', 'portfolio.images');
+            $supplier = $supplier->supplier->load('user', 'services', 'services.supplier.user', 'services.images', 'portfolio', 'portfolio.images');
 
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
