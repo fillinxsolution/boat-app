@@ -8,7 +8,7 @@ interface UserRepositoryInterface
 
     public function storeOrUpdate(array $data, array $roles, $id = null);
 
-    public function updateApiUser(array $data);
+    public function updateApiUser(array $data, $id = null);
 
     public function findById($id);
 
