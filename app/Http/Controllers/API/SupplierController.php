@@ -115,23 +115,24 @@ class SupplierController extends BaseController
     {
 
         try {
+            $result = [];
             if ($request->supplier_id) {
                 if ($request->hasFile('banner_image')) {
                     $data['banner_image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImages');
                 }
-                $this->supplierRepository->storeOrUpdate($data, $request->supplier_id);
+                $result['supplier'] = $this->supplierRepository->storeOrUpdate($data, $request->supplier_id);
             }
             if ($request->user_id) {
                 if ($request->hasFile('image')) {
                     $data['image'] = $this->uploadFile($request->file('image'), 'users/staff');
                 }
-                $this->userRepository->updateApiUser($data, $request->user_id);
+                $result['user'] = $this->userRepository->updateApiUser($data, $request->user_id);
             }
 
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse(null, 'Supplier Image Update SuccessFully', 200);
+        return $this->sendResponse($result, 'Supplier Image Update SuccessFully', 200);
 
 
     }
