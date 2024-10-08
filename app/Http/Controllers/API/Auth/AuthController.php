@@ -30,7 +30,7 @@ class AuthController extends BaseController
         $token = $user->createToken('auth_token')->plainTextToken;
 
         $result = [
-            'token' => $token,
+            'access_token' => $token,
             'user' => $user->load('supplier'),
         ];
         return $this->sendResponse($result, 'Your account has been created successfully.');
@@ -43,9 +43,7 @@ class AuthController extends BaseController
     {
         try {
             if (!Auth::attempt($request->only('email', 'password'))) {
-                return response()->json([
-                    'message' => 'Invalid login details'
-                ], 401);
+                return $this->sendException('Invalid login details',401);
             }
 
             $user = User::where('email', $request->email)->firstOrFail();
