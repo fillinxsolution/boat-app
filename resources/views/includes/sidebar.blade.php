@@ -91,6 +91,9 @@
                             <x-nav-item route="pages.testimonials.index" active="pages.testimonials.*"
                                         title="Testimonials"/>
 {{--                        @endcan--}}
+
+                        <x-nav-item route="pages.about-us.index" active="pages.about-us.*"
+                                    title="About Us"/>
                     </x-nav-item>
 
 {{--                @endcanany--}}

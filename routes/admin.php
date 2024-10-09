@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\AboutController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -118,6 +119,10 @@ Route::prefix('pages')->as('pages.')->group(function () {
     Route::patch('blogs/change/{id}', 'BlogController@change')->name('blogs.change');
     Route::get('blogs/list', 'BlogController@list')->name('blogs.list');
     Route::resource('blogs', BlogController::class);
+
+    /* -------------------------  About Routes ------------------------ */
+    Route::get('about-us/list', 'AboutController@list')->name('about-us.list');
+    Route::resource('about-us', AboutController::class);
 
     /* -------------------------  Testimonials Routes ------------------------ */
 
