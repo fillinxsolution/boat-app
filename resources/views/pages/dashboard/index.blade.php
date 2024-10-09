@@ -76,7 +76,7 @@
                         <p class="pb-0">Total Subscription Revenue</p>
                         <h4 class="text-primary mb-2 mt-4">${{ $stats['total_sub_rev'] ?? 0 }}</h4>
 
-                        <a href="https://supertap.tapday.com/subscriptions"
+                        <a href="#"
                             class="btn btn-sm btn-primary waves-effect waves-light">View Subscriptions</a>
                     </div>
                     <img src="https://supertap.tapday.com/theme/img/illustrations/trophy.png"

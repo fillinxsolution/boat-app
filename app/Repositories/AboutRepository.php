@@ -2,35 +2,28 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\PlanRepositoryInterface;
-use App\Models\Plan;
+use App\Interfaces\AboutRepositoryInterface;
+use App\Models\About;
 use Illuminate\Database\Eloquent\Collection;
 
 
-class PlanRepository implements PlanRepositoryInterface
+class AboutRepository implements AboutRepositoryInterface
 {
     /**
      * All Plans list.
      */
     public function list(): Collection
     {
-        return Plan::latest()->get();
+        return About::latest()->get();
     }
 
-    /**
-     * Active Plans list.
-     */
-    public function activeList(): Collection
-    {
-        return Plan::where('status',1)->latest()->get();
-    }
 
     /**
      * Create or update plan.
      */
-    public function storeOrUpdate(array $data, $id = null): Plan
+    public function storeOrUpdate(array $data, $id = null): About
     {
-        $plan = Plan::updateOrCreate(
+        $plan = About::updateOrCreate(
             ['id' => $id],
             $data
         );
@@ -40,9 +33,9 @@ class PlanRepository implements PlanRepositoryInterface
     /**
      * Find plan by id.
      */
-    public function findById($id): Plan
+    public function findById($id): About
     {
-        return Plan::find($id);
+        return About::find($id);
     }
 
     /**

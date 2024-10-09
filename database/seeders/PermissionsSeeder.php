@@ -304,6 +304,37 @@ class PermissionsSeeder extends Seeder
             ],
 
 
+            /* ---------------------------------- about-us --------------------------------- */
+            [
+                'name' => 'about-us-list',
+                'display_name' => 'About Us List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'about-us-create',
+                'display_name' => 'About Us Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'about-us-edit',
+                'display_name' => 'About Us Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'about-us-delete',
+                'display_name' => 'About Us Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+
         ]);
     }
 }
