@@ -140,7 +140,7 @@ class PortfolioController extends BaseController
     public function deleteImage($id)
     {
         try {
-            $portfolioImage = Portfolio::find($id);
+            $portfolioImage = PortfolioImage::find($id);
             if ($portfolioImage){
                 $portfolioImage->delete();
             }else{
