@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\SupplierController;
+use App\Http\Controllers\API\CaptainController;
 use App\Http\Controllers\API\ServiceController;
 use App\Http\Controllers\API\PortfolioController;
 use App\Http\Controllers\API\HomeController;
@@ -93,6 +94,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('suppliers', SupplierController::class);
     Route::post('supplierImageUpdate', [SupplierController::class,'supplierImageUpdate']);
 
+
+    /* ------------------------- Supplier Routes ------------------------ */
+
+    Route::apiResource('captains', CaptainController::class);
+    Route::post('captainImageUpdate', [CaptainController::class,'captainImageUpdate']);
+
     /* ------------------------- service  Routes ------------------------ */
 
     Route::apiResource('services', ServiceController::class)->except('show');
@@ -105,6 +112,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('portfolio', PortfolioController::class);
     Route::get('portfolio/active', [PortfolioController::class,'activeList']);
+    Route::post('portfolio/upload-image', [PortfolioController::class,'uploadImage']);
+    Route::post('portfolio/delete-image/{id}', [PortfolioController::class,'deleteImage']);
     Route::post('portfolio/changeStatus/{id}', [PortfolioController::class,'changeStatus']);
 
 
