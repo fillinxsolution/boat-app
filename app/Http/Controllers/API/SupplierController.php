@@ -41,6 +41,7 @@ class SupplierController extends BaseController
             $request->validate([
                 'company_name' => 'required',
                 'director_name' => 'required',
+                'supplier_email' => 'required',
                 'address' => 'required',
                 'vat_number' => 'required',
                 'liability_insurance' => 'mimes:pdf|max:2048',

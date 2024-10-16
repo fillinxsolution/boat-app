@@ -13,7 +13,7 @@ class Portfolio extends Model
 
 
 
-   protected $fillable = ['supplier_id','category_id','title','yacht_name','location','description','captain_name','captain_email','status'];
+   protected $fillable = ['supplier_id','category_id','subcategory_id','title','yacht_name','location','description','captain_name','captain_email','status'];
 
 
     public function images()

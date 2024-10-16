@@ -39,6 +39,7 @@ Route::post('/social-login', [AuthController::class, 'socialLogin']);
 
 Route::apiResource('categories', CategoryController::class);
 Route::get('category-page/{id}', [CategoryController::class,'subCategory']);
+Route::get('subCategoryByID/{id}', [CategoryController::class,'subCategory']);
 Route::get('category/is-popular', [CategoryController::class,'isPopular']);
 
 /* ------------------------- Home Page  Routes ------------------------ */

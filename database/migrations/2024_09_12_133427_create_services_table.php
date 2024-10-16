@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('supplier_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('subcategory_id')->nullable();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->enum('status',['Active','DeActive'])->default('Active');
+            $table->foreign('subcategory_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

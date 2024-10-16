@@ -27,11 +27,11 @@ class CaptainController extends BaseController
 
         try {
             $id = auth()->user()->id;
-            $supplier = $this->captainRepository->list($id);
+            $captain = $this->captainRepository->list($id);
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse($supplier, 'Data Get SuccessFully', 200);
+        return $this->sendResponse($captain, 'Data Get SuccessFully', 200);
     }
 
 
@@ -40,6 +40,7 @@ class CaptainController extends BaseController
         try {
             $request->validate([
                 'company_name' => 'required',
+                'captain_email' => 'required',
                 'director_name' => 'required',
                 'address' => 'required',
                 'vat_number' => 'required',
@@ -47,7 +48,7 @@ class CaptainController extends BaseController
                 'insurance' => 'mimes:pdf|max:2048',
             ]);
 
-            $data = $request->except(['banner_image', 'liability_insurance', 'company_registry']);
+            $data = $request->except(['banner_image', 'boat_registration_papers', 'insurance']);
             if ($request->hasFile('banner_image')) {
                 $data['image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImage');
             }
@@ -79,16 +80,16 @@ class CaptainController extends BaseController
                 'insurance' => 'mimes:pdf|max:2048',
             ]);
 
-            $data = $request->except(['banner_image', 'liability_insurance', 'company_registry']);
+            $data = $request->except(['banner_image', 'boat_registration_papers', 'insurance']);
             if ($request->hasFile('banner_image')) {
                 $data['banner_image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImages');
             }
-            if ($request->hasFile('liability_insurance')) {
-                $data['liability_insurance'] = $this->uploadDocuments($request->file('liability_insurance'), 'supplier/documents/liability');
+            if ($request->hasFile('boat_registration_papers')) {
+                $data['boat_registration_papers'] = $this->uploadDocuments($request->file('boat_registration_papers'), 'captains/documents/boatRegistration');
             }
 
-            if ($request->hasFile('company_registry')) {
-                $data['company_registry'] = $this->uploadDocuments($request->file('company_registry'), 'supplier/documents/companyRegistry');
+            if ($request->hasFile('insurance')) {
+                $data['insurance'] = $this->uploadDocuments($request->file('insurance'), 'captains/documents/insurance');
             }
             $data['user_id'] = auth()->user()->id;
             $this->captainRepository->storeOrUpdate($data, $id);
@@ -102,13 +103,13 @@ class CaptainController extends BaseController
     public function companyProfile($id)
     {
         try {
-            $supplier = $this->captainRepository->list($id);
-            $supplier = $supplier->supplier->load('user', 'services', 'services.supplier.user', 'services.images', 'portfolio', 'portfolio.images');
+            $captain = $this->captainRepository->list($id);
+//            $captain = $captain->captain->load('user', 'services', 'services.supplier.user', 'services.images', 'portfolio', 'portfolio.images');
 
         } catch (\Throwable $th) {
             return $this->sendException([$th->getMessage()]);
         }
-        return $this->sendResponse($supplier, 'Data Get SuccessFully', 200);
+        return $this->sendResponse($captain, 'Data Get SuccessFully', 200);
     }
 
     public function captainImageUpdate(Request $request)
@@ -116,11 +117,11 @@ class CaptainController extends BaseController
 
         try {
             $result = [];
-            if ($request->supplier_id) {
+            if ($request->captain_id) {
                 if ($request->hasFile('banner_image')) {
                     $data['banner_image'] = $this->uploadFile($request->file('banner_image'), 'users/bannerImages');
                 }
-                $result['supplier'] = $this->captainRepository->storeOrUpdate($data, $request->supplier_id);
+                $result['supplier'] = $this->captainRepository->storeOrUpdate($data, $request->captain_id);
             }
             if ($request->user_id) {
                 if ($request->hasFile('image')) {

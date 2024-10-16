@@ -14,7 +14,7 @@ class Captain extends Model
     protected $fillable = [
         'user_id','banner_image','company_name','director_name','address',
         'vat_number','sector','description','boat_registration_papers','insurance',
-        'status','reason','captain_status'
+        'status','reason','captain_status' ,'captain_email'
     ];
 
 
