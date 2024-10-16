@@ -126,8 +126,8 @@ class PortfolioController extends BaseController
                 'portfolio_id' => 'required',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
-            $portfolioImage = new Portfolio();
-            $portfolioImage->service_id = $request->service_id;
+            $portfolioImage = new PortfolioImage();
+            $portfolioImage->portfolio_id = $request->portfolio_id;
             $url = $this->uploadFile($request->image, 'portfolio/images');
             $portfolioImage->image = $url;
             $portfolioImage->save();
