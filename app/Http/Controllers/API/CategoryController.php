@@ -71,4 +71,20 @@ class CategoryController extends BaseController
         }
         return $this->sendResponse($result, 'Data Get SuccessFully', 200);
     }
+
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function subCategoryByID($id)
+    {
+        try {
+            $category = $this->serviceCategoryRepository->nestedCategory($id);
+        } catch (\Throwable $th) {
+            return $this->sendException([$th->getMessage()]);
+        }
+        return $this->sendResponse($category, 'Data Get SuccessFully', 200);
+    }
+
+
 }

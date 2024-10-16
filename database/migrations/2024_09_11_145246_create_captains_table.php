@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('insurance')->nullable();
             $table->string('boat_registration_papers')->nullable();
+            $table->string('captain_email')->nullable();
             $table->enum('status',['Approved','Rejected','Pending'])->default('Pending');
             $table->enum('captain_status',['Active','DeActive'])->default('Active');
             $table->string('reason')->nullable();
