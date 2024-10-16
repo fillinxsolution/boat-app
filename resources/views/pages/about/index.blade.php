@@ -1,16 +1,17 @@
 <x-app-layout title="About Us">
 
     <x-breadcrumb title="About Us Management">
-{{--        @can('plans-create')--}}
-        @if(empty($about))
-        <a href="{{ route('pages.about-us.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+        {{--        @can('plans-create')--}}
+        @if(count($about) <= 0)
+            <a href="{{ route('pages.about-us.create') }}"
+               class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
             <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                 <i class="ph-plus"></i>
             </span>
-            Create New
-        </a>
+                Create New
+            </a>
         @endif
-{{--        @endcan--}}
+        {{--        @endcan--}}
     </x-breadcrumb>
 
     <!-- Content area -->

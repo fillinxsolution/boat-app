@@ -69,4 +69,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Supplier::class, 'user_id');
     }
+
+    /**
+     * HasOne .
+     */
+    public function captain(): HasOne
+    {
+        return $this->hasOne(Captain::class, 'user_id');
+    }
 }

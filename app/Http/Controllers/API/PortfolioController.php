@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\BaseController;
 use App\Interfaces\PortfolioRepositoryInterface;
+use App\Models\Portfolio;
 use App\Models\PortfolioImage;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
@@ -107,27 +108,49 @@ class PortfolioController extends BaseController
                 'description' => 'required',
                 'yacht_name' => 'required',
                 'location' => 'required',
-                'images' => 'nullable|array',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+
             ]);
             $data = $request->except(['images']);
             $portfolio = $this->portfolioRepository->storeOrUpdate($data, $id);
-            // Update or upload new images (if images are provided)
-            if ($request->has('images')) {
-                foreach ($request->images as $image) {
-                    $portfolio->images()->delete();
-                    $portfolioImage = new PortfolioImage();
-                    $portfolioImage->portfolio_id = $portfolio->id;
-                    $url = $this->uploadFile($image, 'portfolio/images');
-                    $portfolioImage->image = $url;
-                    $portfolioImage->save();
-                }
-            }
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
         return $this->sendResponse($portfolio, 'Portfolio Updated Successfully', 200);
 
+    }
+
+    public function uploadImage(Request $request)
+    {
+        try {
+            $request->validate([
+                'portfolio_id' => 'required',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+            $portfolioImage = new Portfolio();
+            $portfolioImage->service_id = $request->service_id;
+            $url = $this->uploadFile($request->image, 'portfolio/images');
+            $portfolioImage->image = $url;
+            $portfolioImage->save();
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+        return $this->sendResponse($portfolioImage, 'Image Upload SuccessFully', 200);
+    }
+
+    public function deleteImage($id)
+    {
+        try {
+            $portfolioImage = Portfolio::find($id);
+            if ($portfolioImage){
+                $portfolioImage->delete();
+            }else{
+                return $this->sendResponse(null, 'Image Not Found', 404);
+            }
+
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+        return $this->sendResponse(null, 'Image Delete SuccessFully', 200);
     }
 
 }
