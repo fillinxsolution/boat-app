@@ -17,10 +17,10 @@ class CaptainController extends BaseController
         private CaptainRepositoryInterface $captainRepository,
     )
     {
-//        $this->middleware('permission:captains-list', ['only' => ['index', 'show']]);
-//        $this->middleware('permission:captains-create', ['only' => ['store']]);
-//        $this->middleware('permission:captains-edit', ['only' => ['edit', 'update','change']]);
-//        $this->middleware('permission:captains-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:captains-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:captains-create', ['only' => ['store']]);
+        $this->middleware('permission:captains-edit', ['only' => ['edit', 'update','change']]);
+        $this->middleware('permission:captains-delete', ['only' => ['destroy']]);
     }
 
 
@@ -39,11 +39,11 @@ class CaptainController extends BaseController
             ->addIndexColumn()
             ->editColumn('name', function ($row) {
                 $link = route('users.captains.show', $row->id);
-//                if (auth()->user()->can('captains-view')) {
+                if (auth()->user()->can('captains-view')) {
                 $url = "<a href='{$link}'>{$row->name}</a>";
-//                } else {
-//                    $url =  "<p>{$row->name}</p>";
-//                }
+                } else {
+                    $url =  "<p>{$row->name}</p>";
+                }
                 return $url;
             })
             ->addColumn('action', function ($row) {

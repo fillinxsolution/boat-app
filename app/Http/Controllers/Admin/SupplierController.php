@@ -22,10 +22,10 @@ class SupplierController extends BaseController
         private SupplierRepositoryInterface $supplierRepository,
         private ServiceRepositoryInterface $serviceRepository,
     ) {
-//        $this->middleware('permission:supplier-list', ['only' => ['index', 'show']]);
-//        $this->middleware('permission:supplier-create', ['only' => ['store']]);
-//        $this->middleware('permission:supplier-edit', ['only' => ['edit', 'update','change']]);
-//        $this->middleware('permission:supplier-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:supplier-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:supplier-create', ['only' => ['store']]);
+        $this->middleware('permission:supplier-edit', ['only' => ['edit', 'update','change']]);
+        $this->middleware('permission:supplier-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -46,11 +46,11 @@ class SupplierController extends BaseController
             ->addIndexColumn()
             ->editColumn('name', function ($row) {
                 $link = route('users.suppliers.show', $row->id);
-//                if (auth()->user()->can('supplier-view')) {
+                if (auth()->user()->can('supplier-view')) {
                     $url =  "<a href='{$link}'>{$row->name}</a>";
-//                } else {
-//                    $url =  "<p>{$row->name}</p>";
-//                }
+                } else {
+                    $url =  "<p>{$row->name}</p>";
+                }
                 return $url;
             })
             ->addColumn('action', function ($row) {

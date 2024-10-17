@@ -17,10 +17,10 @@ class PlanController extends BaseController
     public function __construct(
         private PlanRepositoryInterface $planRepository,
     ) {
-//        $this->middleware('permission:plans-list', ['only' => ['index', 'show']]);
-//        $this->middleware('permission:plans-create', ['only' => ['create', 'store']]);
-//        $this->middleware('permission:plans-edit', ['only' => ['edit', 'update', 'popular']]);
-//        $this->middleware('permission:plans-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:plans-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:plans-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:plans-edit', ['only' => ['edit', 'update', 'popular']]);
+        $this->middleware('permission:plans-delete', ['only' => ['destroy']]);
     }
 
 

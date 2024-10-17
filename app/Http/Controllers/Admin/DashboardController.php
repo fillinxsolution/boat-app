@@ -10,7 +10,7 @@ class DashboardController extends BaseController
 {
 
     public function __construct() {
-//        $this->middleware('permission:dashboard-view', ['only' => ['index']]);
+        $this->middleware('permission:dashboard-view', ['only' => ['index']]);
 
     }
 
