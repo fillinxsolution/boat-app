@@ -39,7 +39,7 @@ class CaptainController extends BaseController
             ->addIndexColumn()
             ->editColumn('name', function ($row) {
                 $link = route('users.captains.show', $row->id);
-                if (auth()->user()->can('captains-view')) {
+                if (auth()->user()->can('captains-list')) {
                 $url = "<a href='{$link}'>{$row->name}</a>";
                 } else {
                     $url =  "<p>{$row->name}</p>";
