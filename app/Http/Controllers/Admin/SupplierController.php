@@ -46,7 +46,7 @@ class SupplierController extends BaseController
             ->addIndexColumn()
             ->editColumn('name', function ($row) {
                 $link = route('users.suppliers.show', $row->id);
-                if (auth()->user()->can('supplier-view')) {
+                if (auth()->user()->can('supplier-list')) {
                     $url =  "<a href='{$link}'>{$row->name}</a>";
                 } else {
                     $url =  "<p>{$row->name}</p>";
