@@ -79,6 +79,8 @@ Route::prefix('users')->as('users.')->group(function () {
     Route::resource('captains', CaptainController::class);
 
 
+
+
     /* ------------------------- Admin  Routes ------------------------ */
 
     Route::patch('staff/change/{id}', 'StaffController@change')->name('staff.change');

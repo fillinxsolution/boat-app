@@ -12,7 +12,7 @@ interface CaptainRepositoryInterface
 
     public function findById($id);
 
-    public function supplierDetail(string $id);
+    public function captainDetail(string $id);
 
     public function destroyById($id);
 }

@@ -64,7 +64,7 @@ class CaptainRepository implements CaptainRepositoryInterface
      * Single supplier details.
      */
 
-    public function supplierDetail($id)
+    public function captainDetail($id)
     {
         return User::with('captain')->find($id);
     }
