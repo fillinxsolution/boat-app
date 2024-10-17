@@ -335,6 +335,67 @@ class PermissionsSeeder extends Seeder
             ],
 
 
+            /* ---------------------------------- blogs --------------------------------- */
+            [
+                'name' => 'blogs-list',
+                'display_name' => 'blogs List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'blogs-create',
+                'display_name' => 'blogs Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'blogs-edit',
+                'display_name' => 'blogs Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'blogs-delete',
+                'display_name' => 'blogs Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+            /* ---------------------------------- testimonials --------------------------------- */
+            [
+                'name' => 'testimonials-list',
+                'display_name' => 'testimonials List',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'testimonials-create',
+                'display_name' => 'testimonials Create',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'testimonials-edit',
+                'display_name' => 'testimonials Edit',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'testimonials-delete',
+                'display_name' => 'testimonials Delete',
+                'guard_name' => 'web',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+
+
         ]);
     }
 }

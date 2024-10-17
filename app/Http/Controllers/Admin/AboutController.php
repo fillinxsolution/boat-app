@@ -17,10 +17,10 @@ class AboutController extends BaseController
     public function __construct(
         private AboutRepositoryInterface $aboutRepository,
     ) {
-//        $this->middleware('permission:about-us-list', ['only' => ['index', 'show']]);
-//        $this->middleware('permission:about-us-create', ['only' => ['create', 'store']]);
-//        $this->middleware('permission:about-us-edit', ['only' => ['edit', 'update', 'popular']]);
-//        $this->middleware('permission:about-us-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:about-us-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:about-us-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:about-us-edit', ['only' => ['edit', 'update', 'popular']]);
+        $this->middleware('permission:about-us-delete', ['only' => ['destroy']]);
     }
 
 

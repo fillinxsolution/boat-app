@@ -48,8 +48,8 @@ class BaseController extends Controller
     {
         $response = [
             'success' => false,
-            'message' => 'Exception occurred.',
-            'exception' => $errors
+            'message' => $errors,
+            'exception' => 'Exception occurred.'
         ];
         return response()->json($response, $status);
     }
