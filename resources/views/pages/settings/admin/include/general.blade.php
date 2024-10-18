@@ -5,7 +5,7 @@
 
         <x-input col="6" title="Email" name="values[admin_app_email]" :value="adminSettings('admin_app_email')" />
 
-        <x-input col="12" title="Home Page Video Link"  name="values[home_video_link]"
+        <x-input col="12" title="Home Page Video" type="file" name="values[home_video_link]"
                  :value="adminSettings('home_video_link')" />
 
         <x-input col="4" title="Logo Black" name="values[admin_app_logo_black]" type="dropify" :defaultFile="asset('images/settings/'.adminSettings('admin_app_logo_black')) ?? null"
