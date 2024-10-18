@@ -22,7 +22,7 @@ class HomeController extends BaseController
                 'services' => Service::with(['images'])->where('status', 'Active')->get(),
                 'testimonials' => Testimonial::where('status', 'Active')->get(),
                 'blogs' => Blog::where('status', 'Active')->get(),
-                'videoLink' => 'images/settings'. adminSettings('home_video_link')
+                'videoLink' => '/images/settings'. adminSettings('home_video_link')
             ];
 
         } catch (\Throwable $th) {
